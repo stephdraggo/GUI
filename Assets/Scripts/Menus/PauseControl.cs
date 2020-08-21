@@ -19,6 +19,7 @@ namespace Gui
             optionsPanel = GameObject.Find("/Canvas/Options Panel");
 
             Resume();
+            Resume();
         }
 
         void Update()
