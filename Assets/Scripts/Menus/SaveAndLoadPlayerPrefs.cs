@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 namespace Gui
 {
@@ -9,19 +10,22 @@ namespace Gui
     public class SaveAndLoadPlayerPrefs : MonoBehaviour
     {
         #region Variables
-        public Toggle fullscreenToggle;
+        [Header("Reference Variables")]
         public Dropdown qualityDropdown;
+        public AudioMixer mixer;
+        public Toggle muteToggle, fullscreenToggle;
+        public Slider musicSlider, sfxSlider;
         #endregion
 
         public void Start()
         {
             if (!PlayerPrefs.HasKey("fullscreen")) //if there are no saved options
             {
-                DefaultPlayerPrefs(); //set saved options to default
+                DefaultOptions(); //set saved options to default
             }
-            LoadPlayerPrefs(); //load saved options
+            LoadOptions(); //load saved options
         }
-        public void SavePlayerPrefs()
+        public void SaveOptions()
         {
             #region fullscreen done
             if (Screen.fullScreen) //if in fullscreen
@@ -33,17 +37,26 @@ namespace Gui
                 PlayerPrefs.SetInt("fullscreen", 0); //set value to false(0)
             }
             #endregion
-            #region quality
+            #region quality done
             PlayerPrefs.SetInt("quality", QualitySettings.GetQualityLevel()); //set value to current quality level
             #endregion
-            #region resolution
+            #region audio done
+            float volume; //temporary variable
 
+            mixer.GetFloat("MasterVolume", out volume); //outputs bool and modifies (out) volume variable
+            PlayerPrefs.SetFloat("masterVolume", volume); //save master volume to temporary volume variable
+
+            mixer.GetFloat("MusicVolume", out volume); //outputs bool and modifies (out) volume variable
+            PlayerPrefs.SetFloat("musicVolume", volume); //save music volume to temporary volume variable
+
+            mixer.GetFloat("SFXVolume", out volume); //outputs bool and modifies (out) volume variable
+            PlayerPrefs.SetFloat("sfxVolume", volume); //save sfx volume to temporary volume variable
             #endregion
 
             PlayerPrefs.Save(); //save options
         }
 
-        public void LoadPlayerPrefs()
+        public void LoadOptions()
         {
             #region fullscreen done
             if (PlayerPrefs.GetInt("fullscreen") == 1) //if saved option is true(1)
@@ -57,19 +70,42 @@ namespace Gui
                 Screen.fullScreen = false; //set screen to windowed
             }
             #endregion
-            #region quality
+            #region quality done
             QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("quality")); //set quality to saved quality value
             qualityDropdown.value = PlayerPrefs.GetInt("quality"); //update dropdown to match quality level
             #endregion
-            #region resolution
+            #region audio done
+            mixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("masterVolume")); //set master volume to saved value (0 or -80)
 
+            mixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("musicVolume")); //set music volume to saved value
+            musicSlider.value = PlayerPrefs.GetFloat("musicVolume"); //set music slider ui to saved value
+
+            mixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("sfxVolume")); //set sfx volume to saved value
+            musicSlider.value = PlayerPrefs.GetFloat("sfxVolume"); //set sfx slider ui to saved value
+
+            if (PlayerPrefs.GetFloat("masterVolume") > -70f) //if master volume is greater than muted
+            {
+                muteToggle.isOn = false; //set mute toggle ui to unticked
+            }
+            else //if master volume is muted
+            {
+                muteToggle.isOn = true; //set mute toggle ui to ticked
+            }
             #endregion
 
         }
-        public void DefaultPlayerPrefs()
+        public void DefaultOptions()
         {
+            #region default options
             PlayerPrefs.SetInt("fullscreen", 0); //default is windowed
+
             PlayerPrefs.SetInt("quality", 3); //default quality is high
+
+            PlayerPrefs.SetFloat("masterVolume", 0f); //default master volume
+            PlayerPrefs.SetFloat("musicVolume", 0f); //default music volume
+            PlayerPrefs.SetFloat("sfxVolume", 0f); //default sfx volume
+
+            #endregion
 
             PlayerPrefs.Save(); //save default
         }

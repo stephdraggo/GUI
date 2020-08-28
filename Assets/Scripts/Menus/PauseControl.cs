@@ -15,8 +15,6 @@ namespace Gui
         #endregion
         void Start()
         {
-            pausePanel = GameObject.Find("/Canvas/Pause Panel");
-            optionsPanel = GameObject.Find("/Canvas/Options Panel");
 
             Resume();
             Resume();
