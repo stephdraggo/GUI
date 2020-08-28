@@ -12,7 +12,7 @@ namespace Gui
         public static Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>(); //static dictionary containing keycodes and their reference names
         public Text forward, backward, left, right, jump, crouch, sprint, inventory, interact, pause;
         public GameObject currentKey;
-        public Color selectedKey, changedKey;
+        public Color selectedKey, changedKey, white;
         #endregion
         void Start()
         {
@@ -36,6 +36,7 @@ namespace Gui
             Event e = Event.current;
             if (currentKey != null)
             {
+                currentKey.GetComponent<Image>().color = selectedKey;
                 if (e.isKey) //if any key is pressed
                 {
                     newKey = e.keyCode.ToString(); //get the keycode as string
@@ -52,7 +53,7 @@ namespace Gui
                 {
                     keys[currentKey.name] = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKey);
                     currentKey.GetComponentInChildren<Text>().text = newKey;
-                    //currentKey.GetComponent<Image>().color = changedKey;
+                    currentKey.GetComponent<Image>().color = changedKey;
                     currentKey = null;
                 }
             }
@@ -91,8 +92,17 @@ namespace Gui
         }
         public void ChangeKey(GameObject clickedKey)
         {
-            currentKey = clickedKey;
+            if (currentKey == null | currentKey == clickedKey)
+            {
+                currentKey = clickedKey;
+            }
+            else
+            {
+                currentKey.GetComponent<Image>().color = white;
+                currentKey = clickedKey;
+            }
         }
+        
         #endregion
     }
 }

@@ -55,6 +55,12 @@ namespace Gui
             #region resolution
             //PlayerPrefs.SetString("resolution", );
             #endregion
+            #region keybinds done
+            foreach (var key in KeyBind.keys) //for each key in the keys dictionary
+            {
+                PlayerPrefs.SetString(key.Key, key.Value.ToString()); //save the strings of the key tags and values
+            }
+            #endregion
 
             PlayerPrefs.Save(); //save options
         }
@@ -98,7 +104,12 @@ namespace Gui
             #region resolution
 
             #endregion
-
+            #region keybinds
+            foreach (var key in KeyBind.keys) //for each key in the keys dictionary
+            {
+                key.Value = (KeyCode)System.Enum.Parse(typeof(KeyCode),PlayerPrefs.GetString(key.Key));
+            }
+            #endregion
         }
         public void DefaultOptions()
         {
