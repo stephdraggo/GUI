@@ -11,8 +11,8 @@ namespace Gui
     {
         #region Variables
         [Header("Reference Variables")]
-        public Dropdown qualityDropdown;
         public AudioMixer mixer;
+        public Dropdown qualityDropdown, resolutionDropdown;
         public Toggle muteToggle, fullscreenToggle;
         public Slider musicSlider, sfxSlider;
         #endregion
@@ -51,6 +51,9 @@ namespace Gui
 
             mixer.GetFloat("SFXVolume", out volume); //outputs bool and modifies (out) volume variable
             PlayerPrefs.SetFloat("sfxVolume", volume); //save sfx volume to temporary volume variable
+            #endregion
+            #region resolution
+            //PlayerPrefs.SetString("resolution", );
             #endregion
 
             PlayerPrefs.Save(); //save options
@@ -92,6 +95,9 @@ namespace Gui
                 muteToggle.isOn = true; //set mute toggle ui to ticked
             }
             #endregion
+            #region resolution
+
+            #endregion
 
         }
         public void DefaultOptions()
@@ -111,3 +117,4 @@ namespace Gui
         }
     }
 }
+
