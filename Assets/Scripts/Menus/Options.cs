@@ -77,7 +77,7 @@ namespace Gui
         }
         public void SetResolution(int index)
         {
-            Screen.SetResolution(resolutions[index].width, resolutions[index].height, false); //set selected resolution, windowed(?)
+            Screen.SetResolution(resolutions[index].width, resolutions[index].height, Screen.fullScreenMode); //set selected resolution
         }
         #endregion
         #endregion

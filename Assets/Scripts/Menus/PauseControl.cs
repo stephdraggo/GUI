@@ -15,14 +15,16 @@ namespace Gui
         #endregion
         void Start()
         {
-
             Resume();
+#if UNITY_EDITOR
+            //make sure both panels are not active
             Resume();
+#endif
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) //if pause key is pressed
+            if (Input.GetKeyDown(KeyBind.keys["Pause"])) //if pause key is pressed
             {
                 if (paused) //if paused
                 {

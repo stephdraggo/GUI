@@ -25,11 +25,6 @@ namespace Gui
 
         }
 
-        void Update()
-        {
-
-        }
-
         void OnGUI()
         {
             string newKey = "";
@@ -67,17 +62,15 @@ namespace Gui
             {
                 PlayerPrefs.SetString(key.Key, key.Value.ToString()); //save the strings of the key tags and values
             }
+            PlayerPrefs.Save();
         }
         public void LoadKeys()
         {
-            Debug.Log("Keys almost loaded: " + keys.Count);
-            List<string> keyskeys = new List<string>(keys.Keys);
-            foreach (string key in keyskeys)
+            List<string> keyskeys = new List<string>(keys.Keys); //random list to fix the looping dictionary error
+            foreach (string key in keyskeys) //for each key
             {
-                KeyBind.keys[key] = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key, keys[key].ToString()));
-                Debug.Log("Keys loaded");
+                keys[key] = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key, keys[key].ToString())); //load saved key
             }
-
         }
         public void DefaultKeyBinds()
         {
