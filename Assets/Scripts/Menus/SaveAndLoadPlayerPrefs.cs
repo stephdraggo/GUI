@@ -55,7 +55,7 @@ namespace Gui
             PlayerPrefs.SetFloat("sfxVolume", volume); //save sfx volume to temporary volume variable
             #endregion
             #region resolution
-            //PlayerPrefs.SetString("resolution", );
+            PlayerPrefs.SetString("resolution", Screen.currentResolution.ToString());
             #endregion
             
 
@@ -100,7 +100,7 @@ namespace Gui
             }
             #endregion
             #region resolution
-
+            //Screen.SetResolution((Resolution)PlayerPrefs.GetString("resoluton"));
             #endregion
             
         }

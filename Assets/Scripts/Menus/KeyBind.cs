@@ -21,8 +21,6 @@ namespace Gui
 
             LoadKeys();
             
-
-
             UpdateKeyBindUI(); //update ui to match keybinds
 
         }
@@ -76,12 +74,7 @@ namespace Gui
             List<string> keyskeys = new List<string>(keys.Keys);
             foreach (string key in keyskeys)
             {
-
-           
-                //keys[key.Key] = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString())); //set dictionary reference
-
                 KeyBind.keys[key] = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key, keys[key].ToString()));
-                //keys[key](key.Key, (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString(), key.Value.ToString())));
                 Debug.Log("Keys loaded");
             }
 
