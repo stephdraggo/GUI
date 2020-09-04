@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,10 +17,11 @@ namespace Gui
         #endregion
         void Start()
         {
-            if (!keys.ContainsKey("Forward")) //if no keybinds are saved
-            {
-                DefaultKeyBinds(); //set default keys
-            }
+            DefaultKeyBinds(); //set default keys
+
+            LoadKeys();
+            
+
 
             UpdateKeyBindUI(); //update ui to match keybinds
 
@@ -36,12 +38,13 @@ namespace Gui
             Event e = Event.current;
             if (currentKey != null)
             {
-                currentKey.GetComponent<Image>().color = selectedKey;
+                currentKey.GetComponent<Image>().color = selectedKey; //set button colour to selected
                 if (e.isKey) //if any key is pressed
                 {
                     newKey = e.keyCode.ToString(); //get the keycode as string
                 }
-                if (Input.GetKey(KeyCode.LeftShift)) //
+                #region shift key patch
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     newKey = "LeftShift";
                 }
@@ -49,19 +52,45 @@ namespace Gui
                 {
                     newKey = "RightShift";
                 }
-                if (newKey != "")
+                #endregion
+                if (newKey != "") //if new key is not null
                 {
-                    keys[currentKey.name] = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKey);
-                    currentKey.GetComponentInChildren<Text>().text = newKey;
-                    currentKey.GetComponent<Image>().color = changedKey;
-                    currentKey = null;
+                    keys[currentKey.name] = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKey); //set dictionary reference
+                    currentKey.GetComponentInChildren<Text>().text = newKey; //attach the new key text element
+                    currentKey.GetComponent<Image>().color = changedKey; //set button colour to changed
+                    currentKey = null; //reset current key
                 }
             }
-
-
-
         }
         #region Functions
+        public void SaveKeys()
+        {
+            foreach (var key in keys) //for each key in the keys dictionary
+            {
+                PlayerPrefs.SetString(key.Key, key.Value.ToString()); //save the strings of the key tags and values
+            }
+        }
+        public void LoadKeys()
+        {
+            bool foreachLoopWorked = false;
+            Debug.Log("Keys almost loaded: " + keys.Count);
+            foreach (var key in keys)
+            {
+
+           
+                //keys[key.Key] = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString())); //set dictionary reference
+
+                //KeyBind.keys.ElementAt(i).Key = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString(), key.Value.ToString()));
+                //keys[key](key.Key, (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString(), key.Value.ToString())));
+                Debug.Log("Keys loaded");
+                foreachLoopWorked = true;
+            }
+            if (!foreachLoopWorked)
+            {
+                keys
+            }
+
+        }
         public void DefaultKeyBinds()
         {
             //add default keys with code and tag to dictionary keys
@@ -102,26 +131,7 @@ namespace Gui
                 currentKey = clickedKey;
             }
         }
-        
+
         #endregion
     }
 }
-
-
-/*
- 
-     void OnGUI(){
-     
-     Event e = Event.current;
-
-                if (e.isKey) //if any key is pressed
-                {
-                    if (e.keyCode == KeyCode.W) //if the key is W
-                    {
-
-                    }
-                }
-     
-     }
-     
-     */

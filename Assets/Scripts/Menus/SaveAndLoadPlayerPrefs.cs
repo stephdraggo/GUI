@@ -15,6 +15,7 @@ namespace Gui
         public Dropdown qualityDropdown, resolutionDropdown;
         public Toggle muteToggle, fullscreenToggle;
         public Slider musicSlider, sfxSlider;
+        public KeyBind keybind;
         #endregion
 
         public void Start()
@@ -23,6 +24,7 @@ namespace Gui
             {
                 DefaultOptions(); //set saved options to default
             }
+
             LoadOptions(); //load saved options
         }
         public void SaveOptions()
@@ -55,15 +57,11 @@ namespace Gui
             #region resolution
             //PlayerPrefs.SetString("resolution", );
             #endregion
-            #region keybinds done
-            foreach (var key in KeyBind.keys) //for each key in the keys dictionary
-            {
-                PlayerPrefs.SetString(key.Key, key.Value.ToString()); //save the strings of the key tags and values
-            }
-            #endregion
+            
 
             PlayerPrefs.Save(); //save options
         }
+
 
         public void LoadOptions()
         {
@@ -104,12 +102,7 @@ namespace Gui
             #region resolution
 
             #endregion
-            #region keybinds
-            foreach (var key in KeyBind.keys) //for each key in the keys dictionary
-            {
-                key.Value = (KeyCode)System.Enum.Parse(typeof(KeyCode),PlayerPrefs.GetString(key.Key));
-            }
-            #endregion
+            
         }
         public void DefaultOptions()
         {

@@ -161,6 +161,7 @@ MonoBehaviour:
   fullscreenToggle: {fileID: 838906067}
   musicSlider: {fileID: 456789819}
   sfxSlider: {fileID: 1993211870}
+  keybind: {fileID: 0}
 --- !u!114 &64409672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3230,6 +3231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 64409671}
@@ -3237,7 +3243,57 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
+      objectReference: {fileID: 64409676}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
       objectReference: {fileID: 409026027121817228}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 838906068}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveKeys
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141791063379754274, guid: 7a023ee11c40e664b979ab32a672a794,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a023ee11c40e664b979ab32a672a794, type: 3}
 --- !u!224 &838906065 stripped
