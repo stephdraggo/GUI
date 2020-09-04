@@ -72,22 +72,17 @@ namespace Gui
         }
         public void LoadKeys()
         {
-            bool foreachLoopWorked = false;
             Debug.Log("Keys almost loaded: " + keys.Count);
-            foreach (var key in keys)
+            List<string> keyskeys = new List<string>(keys.Keys);
+            foreach (string key in keyskeys)
             {
 
            
                 //keys[key.Key] = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString())); //set dictionary reference
 
-                //KeyBind.keys.ElementAt(i).Key = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString(), key.Value.ToString()));
+                KeyBind.keys[key] = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key, keys[key].ToString()));
                 //keys[key](key.Key, (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(key.Key.ToString(), key.Value.ToString())));
                 Debug.Log("Keys loaded");
-                foreachLoopWorked = true;
-            }
-            if (!foreachLoopWorked)
-            {
-                keys
             }
 
         }
