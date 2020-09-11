@@ -18,7 +18,7 @@ namespace Gui
         public KeyBind keybind;
         #endregion
 
-        public void Start()
+        void Start()
         {
             if (!PlayerPrefs.HasKey("fullscreen")) //if there are no saved options
             {

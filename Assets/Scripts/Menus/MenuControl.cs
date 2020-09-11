@@ -11,7 +11,7 @@ namespace Gui
     {
         #region Variables
         [Header("Reference Variables")]
-        public GameObject placeHolderShhh, pauseMenu;
+        public GameObject placeHolderShhh;
         #endregion
 
 
@@ -32,7 +32,9 @@ namespace Gui
 
 
 
-
+        /// <summary>My own thing I'm figuring out for fun, not for actual use.</summary>
+        /// <param name="H">Ideally a KeyCode somehow.</param>
+        /// <param name="thingToToggle"></param>
         public void ToggleWithKey(KeyCode H, GameObject thingToToggle)
         {
             if (Input.GetKeyDown(H)) //

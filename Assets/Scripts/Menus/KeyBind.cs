@@ -13,14 +13,17 @@ namespace Gui
         public static Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>(); //static dictionary containing keycodes and their reference names
         public Text forward, backward, left, right, jump, crouch, sprint, inventory, interact, pause;
         public GameObject currentKey;
-        public Color selectedKey, changedKey, white;
+        public Color selectedKey, changedKey, defaultKey;
         #endregion
         void Start()
         {
-            DefaultKeyBinds(); //set default keys
+            if (!keys.ContainsKey("Forward"))
+            {
+                DefaultKeyBinds(); //set default keys
+            }
 
             LoadKeys();
-            
+
             UpdateKeyBindUI(); //update ui to match keybinds
 
         }
@@ -108,7 +111,7 @@ namespace Gui
             }
             else
             {
-                currentKey.GetComponent<Image>().color = white;
+                currentKey.GetComponent<Image>().color = defaultKey;
                 currentKey = clickedKey;
             }
         }

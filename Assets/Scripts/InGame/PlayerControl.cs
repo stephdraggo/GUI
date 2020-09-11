@@ -9,6 +9,7 @@ namespace Gui
     {
         #region Variables
         [Header("Reference Variables")]
+        public static bool isDead;
         public int level, health;
         #endregion
 
