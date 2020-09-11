@@ -24,7 +24,7 @@ namespace Gui
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyBind.keys["Pause"])) //if pause key is pressed
+            if (Input.GetKeyDown(KeyBind.keys["Pause"])||Input.GetKeyDown(KeyCode.Escape)) //if pause key is pressed
             {
                 if (paused) //if paused
                 {
