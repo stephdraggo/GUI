@@ -12,10 +12,8 @@ namespace Gui
         public CharacterController controller;
         public float gravity = 20f;
         [Header("Movement Variables")]
-        public float speed = 5f;
-        public float jumpSpeed = 8f;
+        public float speed = 5f, jumpSpeed = 8f;
         public Vector3 moveDirection, direction;
-
         public float smoothTime = 0.1f, smoothVelocity;
         public Transform cam;
 
@@ -39,21 +37,27 @@ namespace Gui
             if (!PlayerControl.isDead) //if player is alive
             {
 
-                
-                Direction(); //call function to determine direction according to keybinds
-                Speed(); //call function to determine speed
+                Direction();
+                Speed();
 
-                controller.Move(moveDirection * Time.deltaTime);
 
-                if (direction.magnitude >= 0.1f) //without this if, the player moves on its own
+
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothVelocity, smoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                if (controller.isGrounded)
                 {
-                    float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                    float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothVelocity, smoothTime);
-                    transform.rotation = Quaternion.Euler(0f, angle, 0f);
                     moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
                     moveDirection *= speed;
-                    moveDirection.y -= gravity * Time.deltaTime;
+                    if (Input.GetKey(KeyBind.keys["Jump"])) //if jump key is pressed
+                    {
+                        moveDirection.y = jumpSpeed; //move up at the rate of jumpSpeed
+                    }
                 }
+
+                moveDirection.y -= gravity * Time.deltaTime;
+
 
                 controller.Move(moveDirection * Time.deltaTime);
 
@@ -94,10 +98,7 @@ namespace Gui
         {
             if (controller.isGrounded) //if player is on the ground
             {
-                if (Input.GetKey(KeyBind.keys["Jump"])) //if jump key is pressed
-                {
-                    moveDirection.y = jumpSpeed; //move up at the rate of jumpSpeed
-                }
+
                 if (Input.GetKey(KeyBind.keys["Sprint"]) /*&& PlayerControl.canYouRun*/) //if sprint key is pressed
                 {
                     speed = 10f;
@@ -106,9 +107,13 @@ namespace Gui
                 {
                     speed = 2f;
                 }
-                else
+                else if (Input.anyKey)
                 {
                     speed = 5f;
+                }
+                else
+                {
+                    speed = 0f;
                 }
             }
         }

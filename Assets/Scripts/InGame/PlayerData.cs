@@ -9,7 +9,8 @@ namespace Gui
     public class PlayerData
     {
         #region Variables
-        public int level,health;
+        public int level;
+        public float health;
         public float[] position; //vector3
         #endregion
         #region Save Player
