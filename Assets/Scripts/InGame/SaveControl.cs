@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/Save Player Data")]
     public class SaveControl : MonoBehaviour

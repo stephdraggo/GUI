@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/Load Level Async")]
     public class LoadLevel : MonoBehaviour

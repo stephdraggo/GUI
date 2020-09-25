@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/Menu Control")]
     public class MenuControl : MonoBehaviour

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/Player Control")]
     public class PlayerControl : MonoBehaviour
@@ -11,30 +11,32 @@ namespace Gui
         [Header("Reference Variables")]
         public static bool isDead;
         public int level;
-        public float health;
         [System.Serializable]
-        private struct StatBlock //for health, mana, stamina
+        public struct StatBlock //for health, mana, stamina
         {
             [Min(0)] public float current;
             [Min(0)] public float max;
 
         }
-        private StatBlock lifeForce;
+        public StatBlock[] lifeForce=new StatBlock[3]; //health, mana, stamina
         #endregion
         #region Properties
+        /// <summary>
+        /// can't remember why I made this but it works for health
+        /// </summary>
         public float StatMax
         {
             get
             {
-                return lifeForce.current;
+                return lifeForce[0].max;
             }
             set
             {
-                if (lifeForce.current > lifeForce.max)
+                if (lifeForce[0].current > lifeForce[0].max)
                 {
-                    lifeForce.current = lifeForce.max;
+                    lifeForce[0].current = lifeForce[0].max;
                 }
-                lifeForce.current = value;
+                lifeForce[0].current = value;
             }
         }
 
@@ -49,7 +51,7 @@ namespace Gui
             PlayerData data = SaveControl.LoadPlayer();
 
             level = data.level;
-            health = data.health;
+            lifeForce[0].current = data.health;
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
 
 

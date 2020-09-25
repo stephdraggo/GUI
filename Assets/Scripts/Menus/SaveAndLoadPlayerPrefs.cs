@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/Save and Load Player Prefs")]
     public class SaveAndLoadPlayerPrefs : MonoBehaviour

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/KeyBinds")]
     public class KeyBind : MonoBehaviour

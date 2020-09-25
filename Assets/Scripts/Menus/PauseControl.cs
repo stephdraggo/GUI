@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/Pause Control")]
     public class PauseControl : MonoBehaviour

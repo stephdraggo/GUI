@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gui
+namespace GUI1
 {
     [AddComponentMenu("GUI/Player Data")]
     [System.Serializable]
@@ -17,7 +17,7 @@ namespace Gui
         public PlayerData(PlayerControl player) //constructor
         {
             level = player.level;
-            health = player.health;
+            health = player.lifeForce[0].current;
 
             position = new float[3];
             position[0] = player.transform.position.x;
