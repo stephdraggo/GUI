@@ -115,6 +115,9 @@ namespace GUI1
             PlayerPrefs.SetFloat("musicVolume", 0f); //default music volume
             PlayerPrefs.SetFloat("sfxVolume", 0f); //default sfx volume
 
+            PlayerPrefs.SetInt("resolutionWidth", 1600); //these stop it from crashing on start bc 0 resolution
+            PlayerPrefs.SetInt("resolutionHeight", 900);
+
             #endregion
 
             PlayerPrefs.Save(); //save default
