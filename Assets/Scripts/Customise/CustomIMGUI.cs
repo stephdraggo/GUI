@@ -16,12 +16,14 @@ namespace GUI1
 
         [Tooltip("Array of texture lists. There are 6 lists, this will not change.")]
         public List<Texture2D>[] textures = new List<Texture2D>[6];
+
+        [Tooltip("Reference to character renderer.")]
+        public Renderer characterRenderer;
         #endregion
         #region Start
         private void Start()
         {
             _names = new string[6] { "Skin", "Hair", "Eyes", "Mouth", "Clothes", "Armour" };
-
 
 
             StartTexture();
@@ -82,27 +84,36 @@ namespace GUI1
                 } while (tempTexture != null); //go back to "do" while the temp texture is not null
             }
         }
+
+        /// <summary>
+        /// Cycles through the given texture type's index in the given direction
+        /// </summary>
+        /// <param name="type">texture type being affected</param>
+        /// <param name="dir">direction to change the index in</param>
         void SetTexture(string type, int dir)
         {
+            int matIndex = 0, textureIndex = 0;
+
+
             switch (type)
             {
                 case "Skin":
-                    //set texture
+                    matIndex = 1;
                     break;
                 case "Hair":
-                    //set texture
+                    matIndex = 2;
                     break;
                 case "Eyes":
-                    //set texture
+                    matIndex = 3;
                     break;
                 case "Mouth":
-                    //set texture
+                    matIndex = 4;
                     break;
                 case "Clothes":
-                    //set texture
+                    matIndex = 5;
                     break;
                 case "Armour":
-                    //set texture
+                    matIndex = 6;
                     break;
 
 
@@ -110,6 +121,24 @@ namespace GUI1
                 default:
                     break;
             }
+
+            #region directional value
+            textureIndex += dir; //basic change based on input
+            if (textureIndex < 0) //if the new value is less than 0
+            {
+                textureIndex = textures[matIndex].Count - 1; //change to last index of the relevant texture list
+            }
+            else if (textureIndex > textures[matIndex].Count - 1) //if the index excedes the texture list
+            {
+                textureIndex = 0; //set to first texture
+            }
+            #endregion
+
+
+
+            Material[] mats = characterRenderer.materials;
+            mats[matIndex].mainTexture = textures[matIndex][textureIndex];
+            characterRenderer.materials = mats;
         }
         #endregion
     }
