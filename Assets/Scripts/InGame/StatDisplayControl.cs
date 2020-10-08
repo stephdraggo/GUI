@@ -43,7 +43,9 @@ namespace GUI1
         {
             if (isPlayer) //if this is for the player
             {
-                current = player.lifeForce[statIndex].current; //update current stat
+                //try catch is here for the first assignment since it's calling things that aren't functional yet
+                try { current = player.lifeForce[statIndex].current; } //update current stat
+                catch { current = 10; }
             }
 
             healthBar.fillAmount = Mathf.Clamp01(current / max); //tell the image how far to fill
