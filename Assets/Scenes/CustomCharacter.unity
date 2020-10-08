@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4556f449a3a52f479f51617f4493bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterRenderer: {fileID: 1122941614}
 --- !u!4 &21445514
 Transform:
   m_ObjectHideFlags: 0
@@ -1426,6 +1427,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971307097}
   m_CullTransparentMesh: 0
+--- !u!137 &1122941614 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4381454792350094727, guid: 8b39470ed51b7e54a938a792c676b052,
+    type: 3}
+  m_PrefabInstance: {fileID: 479369863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1186414893
 GameObject:
   m_ObjectHideFlags: 0
