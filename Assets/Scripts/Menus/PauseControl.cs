@@ -11,7 +11,7 @@ namespace GUI1
         #region Variables
         [Header("Reference Variables")]
         public static bool paused;
-        public GameObject pausePanel, optionsPanel;
+        public GameObject pausePanel, optionsPanel, invPanel;
         #endregion
         void Start()
         {
@@ -34,6 +34,15 @@ namespace GUI1
                 {
                     Pause();
                 }
+            }
+
+            if (Input.GetKeyDown(KeyBind.keys["Inventory"])) //if inventory key is pressed
+            {
+                //for this build do nothing
+                
+
+                //invPanel.SetActive(true); //acitvate inventory panel
+
             }
         }
 

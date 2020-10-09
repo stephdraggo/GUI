@@ -57,6 +57,8 @@ namespace GUI1
             #region resolution done
             PlayerPrefs.SetInt("resolutionWidth", Screen.currentResolution.width);
             PlayerPrefs.SetInt("resolutionHeight", Screen.currentResolution.height);
+
+            Debug.Log("Saving: " + PlayerPrefs.GetInt("resolutionWidth") + " * " + PlayerPrefs.GetInt("resolutionHeight"));
             #endregion
 
 
@@ -65,15 +67,18 @@ namespace GUI1
         public void LoadOptions()
         {
             #region fullscreen done
+            bool fullScreenRes;
             if (PlayerPrefs.GetInt("fullscreen") == 1) //if saved option is true(1)
             {
                 fullscreenToggle.isOn = true; //change toggle to on
                 Screen.fullScreen = true; //set screen to fullscreen
+                fullScreenRes = true;
             }
             else //if saved option is false(0)
             {
                 fullscreenToggle.isOn = false; //change toggle to off
                 Screen.fullScreen = false; //set screen to windowed
+                fullScreenRes = false;
             }
             #endregion
             #region quality done
@@ -87,7 +92,7 @@ namespace GUI1
             musicSlider.value = PlayerPrefs.GetFloat("musicVolume"); //set music slider ui to saved value
 
             mixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("sfxVolume")); //set sfx volume to saved value
-            musicSlider.value = PlayerPrefs.GetFloat("sfxVolume"); //set sfx slider ui to saved value
+            sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume"); //set sfx slider ui to saved value
 
             if (PlayerPrefs.GetFloat("masterVolume") > -70f) //if master volume is greater than muted
             {
@@ -99,7 +104,8 @@ namespace GUI1
             }
             #endregion
             #region resolution done
-            Screen.SetResolution(PlayerPrefs.GetInt("resolutionWidth"), PlayerPrefs.GetInt("resolutionHeight"), Screen.fullScreenMode);
+            Debug.Log("Loading: " + PlayerPrefs.GetInt("resolutionWidth") + " * " + PlayerPrefs.GetInt("resolutionHeight"));
+            Screen.SetResolution(PlayerPrefs.GetInt("resolutionWidth"), PlayerPrefs.GetInt("resolutionHeight"), fullScreenRes);
             #endregion
 
 
