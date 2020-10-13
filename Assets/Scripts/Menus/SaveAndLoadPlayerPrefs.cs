@@ -54,13 +54,12 @@ namespace GUI1
             mixer.GetFloat("SFXVolume", out volume); //outputs bool and modifies (out) volume variable
             PlayerPrefs.SetFloat("sfxVolume", volume); //save sfx volume to temporary volume variable
             #endregion
-            #region resolution done
+            #region resolution
             PlayerPrefs.SetInt("resolutionWidth", Screen.currentResolution.width);
             PlayerPrefs.SetInt("resolutionHeight", Screen.currentResolution.height);
 
             Debug.Log("Saving: " + PlayerPrefs.GetInt("resolutionWidth") + " * " + PlayerPrefs.GetInt("resolutionHeight"));
             #endregion
-
 
             PlayerPrefs.Save(); //save options
         }
@@ -103,11 +102,10 @@ namespace GUI1
                 muteToggle.isOn = true; //set mute toggle ui to ticked
             }
             #endregion
-            #region resolution done
+            #region resolution
             Debug.Log("Loading: " + PlayerPrefs.GetInt("resolutionWidth") + " * " + PlayerPrefs.GetInt("resolutionHeight"));
             Screen.SetResolution(PlayerPrefs.GetInt("resolutionWidth"), PlayerPrefs.GetInt("resolutionHeight"), fullScreenRes);
             #endregion
-
 
         }
         public void DefaultOptions()
