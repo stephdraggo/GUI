@@ -11,7 +11,7 @@ namespace GUI1
         [Tooltip("1/160 of screen width and 1/90 screen height")]
         private float _scrX, _scrY;
 
-        [Tooltip("Array of visual customising strings.")]
+        [SerializeField,Tooltip("Array of visual customising strings.")]
         private string[] _names;
 
         [Tooltip("Array of texture lists. There are 6 lists, this will not change.")]
@@ -72,15 +72,15 @@ namespace GUI1
                 Texture2D tempTexture; //create temporary texture
                 do
                 {
-                    tempTexture = (Texture2D)Resources.Load("Character/" + _names[i] + "_" + index);
+                    tempTexture = (Texture2D)Resources.Load("Character/" + _names[i] + "_" + index); //locate the texture by path
 
-                    if (tempTexture != null)
+                    if (tempTexture != null) //if that texture exists
                     {
-                        textures[i].Add(tempTexture);
-                        Debug.Log("Added texture: " + _names[i] + "_" + index);
+                        textures[i].Add(tempTexture); //add to list
                     }
 
                     index++;
+
                 } while (tempTexture != null); //go back to "do" while the temp texture is not null
             }
         }
@@ -92,13 +92,19 @@ namespace GUI1
         /// <param name="dir">direction to change the index in</param>
         void SetTexture(string type, int dir)
         {
-            int matIndex = 0, textureIndex = 0;
+            int matIndex = 0;
+            int textureIndex = 0;
 
+            Material[] mats = characterRenderer.materials;
 
             switch (type)
             {
                 case "Skin":
                     matIndex = 1;
+                    Debug.Log("affect skin");
+                    //want to get the current skin texture as its index in the skin texture list
+
+                    //textureIndex = mats[matIndex].mainTexture;
                     break;
                 case "Hair":
                     matIndex = 2;
@@ -136,7 +142,7 @@ namespace GUI1
 
 
 
-            Material[] mats = characterRenderer.materials;
+            
             mats[matIndex].mainTexture = textures[matIndex][textureIndex];
             characterRenderer.materials = mats;
         }

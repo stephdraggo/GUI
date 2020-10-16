@@ -19,6 +19,12 @@ namespace GUI1
 
         }
         public StatBlock[] lifeForce=new StatBlock[3]; //health, mana, stamina
+        public struct BaseSkill //for strength etc
+        {
+            string skillName;
+            int defaultValue;
+        }
+        public BaseSkill[] baseSkills = new BaseSkill[6];
         #endregion
         #region Properties
         /// <summary>
