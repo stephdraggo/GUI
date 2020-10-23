@@ -18,13 +18,15 @@ namespace GUI1
             [Min(0)] public float max;
 
         }
-        public StatBlock[] lifeForce=new StatBlock[3]; //health, mana, stamina
-        public struct BaseSkill //for strength etc
+        public StatBlock[] lifeForce = new StatBlock[3]; //health, mana, stamina
+        public struct Skill //for strength, endurance, agility, charisma, aura & thought
         {
-            string skillName;
-            int defaultValue;
+            public string skillName;
+            public int baseValue;
+            public int tempValue;
+            public int totalValue;
         }
-        public BaseSkill[] baseSkills = new BaseSkill[6];
+        public Skill[] skills = new Skill[6]; //strength, endurance, agility, charisma, aura & thought
         #endregion
         #region Properties
         /// <summary>
@@ -49,18 +51,39 @@ namespace GUI1
         #endregion
         public void Save()
         {
-            SaveControl.SavePlayer(this);
+            BinarySaveControl.SavePlayer(this);
         }
 
         public void Load()
         {
-            PlayerData data = SaveControl.LoadPlayer();
+            PlayerData data = BinarySaveControl.LoadPlayer();
+
+            name = data.name;
 
             level = data.level;
-            lifeForce[0].current = data.health;
+
+            #region position
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+            #endregion
 
+            #region Life Force
+            for (int i = 0; i < 3; i++)
+            {
+                lifeForce[i].current = data.currentLifeForce[i];
+                lifeForce[i].max = data.maxLifeForce[i];
+            }
+            #endregion
 
+            #region Skills
+            for (int i = 0; i < 6; i++)
+            {
+                skills[i].baseValue = data.skillBase[i];
+                skills[i].tempValue = data.skillTemp[i];
+                skills[i].totalValue = skills[i].baseValue + skills[i].tempValue;
+            }
+            #endregion
+
+            //class needed
 
         }
     }

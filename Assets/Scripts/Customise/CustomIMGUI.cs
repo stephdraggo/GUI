@@ -11,11 +11,14 @@ namespace GUI1
         [Tooltip("1/160 of screen width and 1/90 screen height")]
         private float _scrX, _scrY;
 
-        [SerializeField,Tooltip("Array of visual customising strings.")]
+        [SerializeField, Tooltip("Array of visual customising strings.")]
         private string[] _names;
 
         [Tooltip("Array of texture lists. There are 6 lists, this will not change.")]
         public List<Texture2D>[] textures = new List<Texture2D>[6];
+
+        [Tooltip("Index of current texture: skin, hair, eyes, mouth, clothes, armour.")]
+        public int[] textureID = new int[6];
 
         [Tooltip("Reference to character renderer.")]
         public Renderer characterRenderer;
@@ -28,6 +31,11 @@ namespace GUI1
 
             StartTexture();
 
+            if (PlayerPrefs.GetString("Saved") == null)
+            {
+                DefaultCharacter();
+            }
+            LoadCharacter();
         }
         #endregion
         #region OnGUI
@@ -39,13 +47,13 @@ namespace GUI1
 
             #endregion
             #region appearance
-            GUI.Label(new Rect(_scrX, _scrY, 20 * _scrX, _scrY * 3), "Customise Appearance");
+            GUI.Label(new Rect(_scrX, _scrY, 20 * _scrX, _scrY * 3), "Customise Appearance"); //title box
 
-            for (int i = 0; i < _names.Length; i++)
+            for (int i = 0; i < _names.Length; i++) //for every texture type
             {
-                if (GUI.Button(new Rect(_scrX, _scrY * (i + 1) * 4, _scrX * 3, _scrY * 3), "<"))
+                if (GUI.Button(new Rect(_scrX, _scrY * (i + 1) * 4, _scrX * 3, _scrY * 3), "<")) //make back button
                 {
-                    SetTexture(_names[i], -1);
+                    SetTexture(_names[i], -1); //
                 }
 
                 GUI.Label(new Rect(5 * _scrX, _scrY * (i + 1) * 4, 10 * _scrX, 3 * _scrY), _names[i]);
@@ -93,18 +101,14 @@ namespace GUI1
         void SetTexture(string type, int dir)
         {
             int matIndex = 0;
-            int textureIndex = 0;
 
-            Material[] mats = characterRenderer.materials;
+            
 
             switch (type)
             {
                 case "Skin":
                     matIndex = 1;
                     Debug.Log("affect skin");
-                    //want to get the current skin texture as its index in the skin texture list
-
-                    //textureIndex = mats[matIndex].mainTexture;
                     break;
                 case "Hair":
                     matIndex = 2;
@@ -128,23 +132,65 @@ namespace GUI1
                     break;
             }
 
+
+
             #region directional value
-            textureIndex += dir; //basic change based on input
-            if (textureIndex < 0) //if the new value is less than 0
+            textureID[matIndex] += dir; //basic change based on input
+            if (textureID[matIndex] < 0) //if the new value is less than 0
             {
-                textureIndex = textures[matIndex].Count - 1; //change to last index of the relevant texture list
+                textureID[matIndex] = textures[matIndex].Count - 1; //change to last index of the relevant texture list
             }
-            else if (textureIndex > textures[matIndex].Count - 1) //if the index excedes the texture list
+            else if (textureID[matIndex] > textures[matIndex].Count - 1) //if the index excedes the texture list
             {
-                textureIndex = 0; //set to first texture
+                textureID[matIndex] = 0; //set to first texture
             }
             #endregion
 
 
+            Material[] mats = characterRenderer.materials; //get the array of materials from the object
 
-            
-            mats[matIndex].mainTexture = textures[matIndex][textureIndex];
-            characterRenderer.materials = mats;
+            mats[matIndex].mainTexture = textures[matIndex][textureID[matIndex]]; //change the specified material's texture to the new texture
+            characterRenderer.materials[matIndex] = mats[matIndex]; //load the changed material onto the object
+        }
+        #endregion
+
+        #region Save
+        public void SaveCharacter()
+        {
+            PlayerPrefs.SetString("Saved", "Yes");
+
+            //save textures
+            PlayerPrefs.SetInt("Skin", textureID[0]);
+            PlayerPrefs.SetInt("Hair", textureID[1]);
+            PlayerPrefs.SetInt("Eyes", textureID[2]);
+            PlayerPrefs.SetInt("Mouth", textureID[3]);
+            PlayerPrefs.SetInt("Clothes", textureID[4]);
+            PlayerPrefs.SetInt("Armour", textureID[5]);
+
+
+
+            PlayerPrefs.Save();
+        }
+        public void LoadCharacter()
+        {
+            //load textures
+            textureID[0] = PlayerPrefs.GetInt("Skin");
+            textureID[1] = PlayerPrefs.GetInt("Hair");
+            textureID[2] = PlayerPrefs.GetInt("Eyes");
+            textureID[3] = PlayerPrefs.GetInt("Mouth");
+            textureID[4] = PlayerPrefs.GetInt("Clothes");
+            textureID[5] = PlayerPrefs.GetInt("Armour");
+
+
+        }
+        public void DefaultCharacter()
+        {
+            for (int i = 0; i < textureID.Length; i++)
+            {
+                textureID[i] = 0;
+            }
+
+            SaveCharacter();
         }
         #endregion
     }

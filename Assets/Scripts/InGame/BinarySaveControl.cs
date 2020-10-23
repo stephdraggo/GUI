@@ -1,14 +1,11 @@
 ﻿using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace GUI1
 {
     [AddComponentMenu("GUI/Save Player Data")]
-    public class SaveControl : MonoBehaviour
+    public class BinarySaveControl : MonoBehaviour
     {
         public static void SavePlayer(PlayerControl player)
         {
@@ -20,7 +17,7 @@ namespace GUI1
 
             PlayerData data = new PlayerData(player); //get data to save
 
-            formatter.Serialize(stream, data); //put data in file
+            formatter.Serialize(stream, data); //put data in file and encrypt
 
             stream.Close(); //close it up
         }
@@ -35,7 +32,7 @@ namespace GUI1
 
                 FileStream stream = new FileStream(path, FileMode.Open); //open file
 
-                PlayerData data = formatter.Deserialize(stream) as PlayerData; //take data from file
+                PlayerData data = (PlayerData)formatter.Deserialize(stream); //take data from file and convert to usable
 
                 stream.Close(); //close file
 

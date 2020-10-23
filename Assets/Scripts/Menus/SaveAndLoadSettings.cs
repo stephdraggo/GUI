@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 namespace GUI1
 {
     [AddComponentMenu("GUI/Save and Load Player Prefs")]
-    public class SaveAndLoadPlayerPrefs : MonoBehaviour
+    public class SaveAndLoadSettings : MonoBehaviour
     {
         #region Variables
         [Header("Reference Variables")]
