@@ -7,15 +7,15 @@ namespace GUI3.Inventories
     public class Item
     {
         #region Private Variables
-        private int id;
-        private string name;
-        private string description;
-        private int eValue;
-        private int amount;
-        private Texture2D icon;
-        private GameObject mesh;
-        private ItemType type;
-        private int effectAmount;
+        [SerializeField] private int id;
+        [SerializeField] private string name;
+        [SerializeField] private string description;
+        [SerializeField] private int eValue;
+        [SerializeField] private int amount;
+        [SerializeField] private Texture2D icon;
+        [SerializeField] private GameObject mesh;
+        [SerializeField] private ItemType type;
+        [SerializeField] private int effectAmount;
         #endregion
 
         #region Public Properties
