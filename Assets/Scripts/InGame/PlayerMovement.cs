@@ -117,5 +117,31 @@ namespace GUI1
                 }
             }
         }
+
+        void Interact()
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                Ray ray;
+                RaycastHit hitInfo;
+
+                ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+
+                float distance = 5f;
+                int layerMask = LayerMask.NameToLayer("Interactable"); //get layer number
+                layerMask = 1 << layerMask; //bit shift to get actual number
+                if (Physics.Raycast(ray, out hitInfo, distance, layerMask))
+                {
+                    #region NPC
+                    if (hitInfo.collider.TryGetComponent(out GameSystems.NPCs.BaseNPC npc))
+                    {
+                        npc.Interact();
+                    }
+                    #endregion
+                }
+
+
+            }
+        }
     }
 }

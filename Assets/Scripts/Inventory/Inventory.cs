@@ -46,7 +46,27 @@ namespace GUI3.Inventories
 
         }
         #region Functions
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_id"></param>
+        /// <returns></returns>
+        public Item FindItem(int _id)
+        {
+            return inventory.Find(items => items.ID == _id);
+        }
+        public void AddItem(Item item)
+        {
+            Item foundItem = inventory.Find(items => items.ID == item.ID);
+            if (foundItem != null)
+            {
+                foundItem.Amount+=item.Amount;
+            }
+            else
+            {
+                inventory.Add(item);
+            }
+        }
         #endregion
 
 #if UNITY_EDITOR
