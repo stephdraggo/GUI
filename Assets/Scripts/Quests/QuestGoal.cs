@@ -14,9 +14,8 @@ namespace GameSystems.Quests
 
         #endregion
 
-        #region Functions
+        #region Abstract Functions
         public abstract bool Completed();
-        protected abstract bool CheckSetup();
         #endregion
     }
 
@@ -26,7 +25,6 @@ namespace GameSystems.Quests
         Gather,
         Kill,
         Escort,
-        Locate,
     }
     public enum QuestState
     {

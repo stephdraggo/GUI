@@ -14,28 +14,19 @@ namespace GameSystems.Quests
 
         public GUI3.Inventories.Inventory inventory;
         #endregion
-
-
-        #region Functions
-        protected override bool CheckSetup()
+        #region Start
+        private void Start()
         {
+            inventory = GameObject.FindObjectOfType<GUI3.Inventories.Inventory>(); //this might be wrong
             if (inventory == null)
             {
-                inventory = GameObject.FindObjectOfType<GUI3.Inventories.Inventory>(); //this might be wrong
-                if (inventory == null)
-                {
-                    Debug.LogError("There is no player inventory.");
-                    return false;
-                }
+                Debug.LogError("There is no player inventory.");
             }
-            return true;
         }
+        #endregion
+        #region Functions
         public override bool Completed()
         {
-            if (!CheckSetup())
-            {
-                return false;
-            }
             GUI3.Inventories.Item item = inventory.FindItem(itemId);
             if (item == null)
             {
