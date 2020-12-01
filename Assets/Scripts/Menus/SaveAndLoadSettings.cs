@@ -103,7 +103,6 @@ namespace GUI1
             }
             #endregion
             #region resolution
-            Debug.Log("Loading: " + PlayerPrefs.GetInt("resolutionWidth") + " * " + PlayerPrefs.GetInt("resolutionHeight"));
             Screen.SetResolution(PlayerPrefs.GetInt("resolutionWidth"), PlayerPrefs.GetInt("resolutionHeight"), fullScreenRes);
             #endregion
 

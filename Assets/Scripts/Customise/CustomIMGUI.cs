@@ -31,11 +31,15 @@ namespace GUI1
 
             StartTexture();
 
-            if (PlayerPrefs.GetString("Saved") == null)
+            if (string.IsNullOrEmpty(PlayerPrefs.GetString("Saved")))
             {
                 DefaultCharacter();
             }
             LoadCharacter();
+            for (int i = 0; i < textureID.Length; i++)
+            {
+                SetTexture(i, i + 1);
+            }
         }
         #endregion
 
@@ -74,18 +78,18 @@ namespace GUI1
         #region canvas functions
         public void SetTextureNext(string _type)
         {
-            SetTexture(_type, 1);
+            SetTextureDirectional(_type, 1);
         }
         public void SetTextureBack(string _type)
         {
-            SetTexture(_type, -1);
+            SetTextureDirectional(_type, -1);
         }
         public void RandomTextures()
         {
             for (int i = 0; i < textureID.Length; i++)
             {
                 textureID[i] = Random.Range(0, textures[i].Count);
-                SetTexture(_names[i].ToString(), textureID[i]);
+                SetTextureDirectional(_names[i].ToString(), textureID[i]);
             }
         }
         #endregion
@@ -122,7 +126,7 @@ namespace GUI1
         /// </summary>
         /// <param name="_type">texture type being affected</param>
         /// <param name="_dir">direction to change the index in</param>
-        void SetTexture(string _type, int _dir)
+        void SetTextureDirectional(string _type, int _dir)
         {
             int matIndex = 0;
 
@@ -165,9 +169,17 @@ namespace GUI1
             }
             #endregion
 
+            //Material[] mats = characterRenderer.materials; //get the array of materials from the object
+            //mats[matIndex + 1].mainTexture = textures[matIndex][textureID[matIndex]]; //change the specified material's texture to the new texture
+            //characterRenderer.materials[matIndex + 1] = mats[matIndex + 1]; //load the changed material onto the object
+            SetTexture(matIndex, matIndex + 1);
+        }
+
+        void SetTexture(int _textureId, int _matIndex)
+        {
             Material[] mats = characterRenderer.materials; //get the array of materials from the object
-            mats[matIndex + 1].mainTexture = textures[matIndex][textureID[matIndex]]; //change the specified material's texture to the new texture
-            characterRenderer.materials[matIndex + 1] = mats[matIndex + 1]; //load the changed material onto the object
+            mats[_matIndex].mainTexture = textures[_textureId][textureID[_textureId]]; //change the specified material's texture to the new texture
+            characterRenderer.materials[_matIndex] = mats[_matIndex]; //load the changed material onto the object
         }
         #endregion
         #endregion
@@ -202,7 +214,7 @@ namespace GUI1
             for (int i = 0; i < textureID.Length; i++)
             {
                 textureID[i] = 0;
-                SetTexture(_names[i].ToString(), textureID[i]);
+                SetTextureDirectional(_names[i].ToString(), textureID[i]);
             }
 
             SaveCharacter();
