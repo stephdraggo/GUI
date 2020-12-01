@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _names: []
+  textureID: 000000000000000000000000000000000000000000000000
   characterRenderer: {fileID: 1122941614}
 --- !u!4 &21445514
 Transform:

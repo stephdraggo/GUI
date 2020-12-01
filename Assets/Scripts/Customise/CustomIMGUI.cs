@@ -8,7 +8,7 @@ namespace GUI1
     public class CustomIMGUI : MonoBehaviour
     {
         #region Variables
-        [Tooltip("1/160 of screen width and 1/90 screen height")]
+        [Tooltip("1/80 of screen width and 1/45 screen height")]
         private float _scrX, _scrY;
 
         [SerializeField, Tooltip("Array of visual customising strings.")]
@@ -42,8 +42,8 @@ namespace GUI1
         private void OnGUI()
         {
             #region calculate screen dimensions
-            _scrX = Screen.width / 160;
-            _scrY = Screen.height / 90;
+            _scrX = Screen.width / 80;
+            _scrY = Screen.height / 45;
 
             #endregion
             #region appearance
@@ -107,23 +107,23 @@ namespace GUI1
             switch (type)
             {
                 case "Skin":
-                    matIndex = 1;
+                    matIndex = 0;
                     Debug.Log("affect skin");
                     break;
                 case "Hair":
-                    matIndex = 2;
+                    matIndex = 1;
                     break;
                 case "Eyes":
-                    matIndex = 3;
+                    matIndex = 2;
                     break;
                 case "Mouth":
-                    matIndex = 4;
+                    matIndex = 3;
                     break;
                 case "Clothes":
-                    matIndex = 5;
+                    matIndex = 4;
                     break;
                 case "Armour":
-                    matIndex = 6;
+                    matIndex = 5;
                     break;
 
 
@@ -149,8 +149,8 @@ namespace GUI1
 
             Material[] mats = characterRenderer.materials; //get the array of materials from the object
 
-            mats[matIndex].mainTexture = textures[matIndex][textureID[matIndex]]; //change the specified material's texture to the new texture
-            characterRenderer.materials[matIndex] = mats[matIndex]; //load the changed material onto the object
+            mats[matIndex+1].mainTexture = textures[matIndex][textureID[matIndex]]; //change the specified material's texture to the new texture
+            characterRenderer.materials[matIndex+1] = mats[matIndex+1]; //load the changed material onto the object
         }
         #endregion
 
