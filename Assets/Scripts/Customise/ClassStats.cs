@@ -9,22 +9,6 @@ namespace GUI1
     public class ClassStats : MonoBehaviour
     {
         #region Variables
-
-        #endregion
-
-        #region Functions
-        //choose class
-
-        //classes have specific stats
-
-        //assign bonus stats
-
-
-        #endregion
-
-
-        #region old
-        #region Variables
         public PlayerControl player;
         public string playerName;
         [Header("Character Class")]
@@ -53,6 +37,8 @@ namespace GUI1
             }
         }
         #endregion
+        #region Functions
+        #region add, take and reset stats
         public void AddStat(int _index)
         {
             if (statPoints > 0)
@@ -83,25 +69,19 @@ namespace GUI1
                 }
             }
         }
+        #endregion
+        #region display
         public void UpdateDisplay(int i)
         {
+            pointsDisplay.text = "Points left: " + statPoints.ToString();
             statDisplay[i].text = player.skills[i].skillName + ": " + (player.skills[i].baseValue + player.skills[i].tempValue).ToString();
         }
         public void UpdateName(string _newName)
         {
             player.name = _newName;
         }
-        void OnGUI()
-        {
-            Vector2 scr = new Vector2(Screen.width / 16, Screen.height / 9);
-           
-            #region Character Class
-           
-            #endregion
-
-            player.name = GUI.TextField(new Rect(7 * scr.x, 6.5f * scr.y, 2 * scr.x, 0.5f * scr.y), player.name);
-        }
-
+        #endregion
+        #region save
         public void SaveCharacter()
         {
             player.Save();
@@ -115,7 +95,8 @@ namespace GUI1
             PlayerPrefs.SetString("CharacterClass", selectedClass[selectedIndex]);
             */
         }
-
+        #endregion
+        #region choose class
         public void ChooseClass(int classIndex)
         {
             switch (classIndex)
@@ -149,7 +130,7 @@ namespace GUI1
                     break;
             }
         }
-
+        #endregion
         #endregion
     }
     public enum CharacterClass

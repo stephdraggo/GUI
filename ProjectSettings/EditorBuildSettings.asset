@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/EmptyScene.unity
     guid: 32999ed5d097a134bbf59b564d3cf5bf
+  - enabled: 1
+    path: Assets/Scenes/CustomCharacter.unity
+    guid: 3a54ce9dacf37cd46a613c6221d2b90a
   m_configObjects: {}
