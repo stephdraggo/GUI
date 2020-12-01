@@ -11,6 +11,7 @@ namespace GUI1
         [Header("Reference Variables")]
         public static bool isDead;
         public int level;
+        public CharacterClass playerClass;
         [System.Serializable]
         public struct StatBlock //for health, mana, stamina
         {
@@ -62,6 +63,8 @@ namespace GUI1
 
             level = data.level;
 
+            playerClass = data.playerClass;
+
             #region position
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
             #endregion
@@ -83,7 +86,6 @@ namespace GUI1
             }
             #endregion
 
-            //class needed
 
         }
     }

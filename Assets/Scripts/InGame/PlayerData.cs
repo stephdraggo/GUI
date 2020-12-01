@@ -19,6 +19,7 @@ namespace GUI1
         public int[] skillBase = new int[6];
         public int[] skillTemp = new int[6];
 
+        public CharacterClass playerClass;
         #endregion
         #region Save Player
         public PlayerData(PlayerControl player) //constructor
@@ -26,6 +27,8 @@ namespace GUI1
             name = player.name;
 
             level = player.level;
+
+            playerClass = player.playerClass;
 
             #region position
             //set three points for position vector3
@@ -52,7 +55,6 @@ namespace GUI1
             }
             #endregion
 
-            //class needed
 
         }
         #endregion

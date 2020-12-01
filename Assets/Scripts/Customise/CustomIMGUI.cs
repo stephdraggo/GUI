@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace GUI1
 {
-    [AddComponentMenu("GUI/Customisation/IMGUI (prototype only)")]
+    [AddComponentMenu("GUI/Customisation/Visuals")]
     public class CustomIMGUI : MonoBehaviour
     {
         #region Variables
-        [Tooltip("1/80 of screen width and 1/45 screen height")]
+        [Tooltip("1/80 of screen width and 1/45 screen height, for OnGUI only.")]
         private float _scrX, _scrY;
 
         [SerializeField, Tooltip("Array of visual customising strings.")]
-        private string[] _names;
+        protected string[] _names;
 
         [Tooltip("Array of texture lists. There are 6 lists, this will not change.")]
         public List<Texture2D>[] textures = new List<Texture2D>[6];
@@ -38,7 +38,9 @@ namespace GUI1
             LoadCharacter();
         }
         #endregion
-        #region OnGUI
+
+        #region OnGUI, not used
+        /*
         private void OnGUI()
         {
             #region calculate screen dimensions
@@ -65,8 +67,29 @@ namespace GUI1
             }
             #endregion
         }
+        */
         #endregion
+
         #region Functions
+        #region canvas functions
+        public void SetTextureNext(string _type)
+        {
+            SetTexture(_type, 1);
+        }
+        public void SetTextureBack(string _type)
+        {
+            SetTexture(_type, -1);
+        }
+        public void RandomTextures()
+        {
+            for (int i = 0; i < textureID.Length; i++)
+            {
+                textureID[i] = Random.Range(0, textures[i].Count);
+                SetTexture(_names[i].ToString(), textureID[i]);
+            }
+        }
+        #endregion
+        #region start texture
         /// <summary>
         /// Creates lists of textures and fills them with the available textures.
         /// </summary>
@@ -92,23 +115,21 @@ namespace GUI1
                 } while (tempTexture != null); //go back to "do" while the temp texture is not null
             }
         }
-
+        #endregion
+        #region set texture
         /// <summary>
         /// Cycles through the given texture type's index in the given direction
         /// </summary>
-        /// <param name="type">texture type being affected</param>
-        /// <param name="dir">direction to change the index in</param>
-        void SetTexture(string type, int dir)
+        /// <param name="_type">texture type being affected</param>
+        /// <param name="_dir">direction to change the index in</param>
+        void SetTexture(string _type, int _dir)
         {
             int matIndex = 0;
 
-            
-
-            switch (type)
+            switch (_type)
             {
                 case "Skin":
                     matIndex = 0;
-                    Debug.Log("affect skin");
                     break;
                 case "Hair":
                     matIndex = 1;
@@ -132,10 +153,8 @@ namespace GUI1
                     break;
             }
 
-
-
             #region directional value
-            textureID[matIndex] += dir; //basic change based on input
+            textureID[matIndex] += _dir; //basic change based on input
             if (textureID[matIndex] < 0) //if the new value is less than 0
             {
                 textureID[matIndex] = textures[matIndex].Count - 1; //change to last index of the relevant texture list
@@ -146,12 +165,11 @@ namespace GUI1
             }
             #endregion
 
-
             Material[] mats = characterRenderer.materials; //get the array of materials from the object
-
-            mats[matIndex+1].mainTexture = textures[matIndex][textureID[matIndex]]; //change the specified material's texture to the new texture
-            characterRenderer.materials[matIndex+1] = mats[matIndex+1]; //load the changed material onto the object
+            mats[matIndex + 1].mainTexture = textures[matIndex][textureID[matIndex]]; //change the specified material's texture to the new texture
+            characterRenderer.materials[matIndex + 1] = mats[matIndex + 1]; //load the changed material onto the object
         }
+        #endregion
         #endregion
 
         #region Save
@@ -167,8 +185,6 @@ namespace GUI1
             PlayerPrefs.SetInt("Clothes", textureID[4]);
             PlayerPrefs.SetInt("Armour", textureID[5]);
 
-
-
             PlayerPrefs.Save();
         }
         public void LoadCharacter()
@@ -180,14 +196,13 @@ namespace GUI1
             textureID[3] = PlayerPrefs.GetInt("Mouth");
             textureID[4] = PlayerPrefs.GetInt("Clothes");
             textureID[5] = PlayerPrefs.GetInt("Armour");
-
-
         }
         public void DefaultCharacter()
         {
             for (int i = 0; i < textureID.Length; i++)
             {
                 textureID[i] = 0;
+                SetTexture(_names[i].ToString(), textureID[i]);
             }
 
             SaveCharacter();
