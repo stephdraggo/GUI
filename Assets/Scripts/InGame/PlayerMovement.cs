@@ -13,7 +13,7 @@ namespace GUI1
         public float gravity = 20f;
         [Header("Movement Variables")]
         public float speed = 5f, jumpSpeed = 8f;
-        public Vector3 moveDirection, direction;
+        public Vector3 moveDirection;
         public float smoothTime = 0.1f, smoothVelocity;
         public Transform cam;
 
@@ -36,20 +36,27 @@ namespace GUI1
         {
             if (!PlayerControl.isDead) //if player is alive
             {
+                float oldGravity = moveDirection.y;
 
                 Direction();
                 Speed();
 
+                //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                //moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * moveDirection; //changing this to up instead of forward makes him jump only
+                moveDirection = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * moveDirection;
 
+                float angle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, angle, ref smoothVelocity, smoothTime);
+                transform.eulerAngles = new Vector3(0f, smoothAngle, 0f);
 
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothVelocity, smoothTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                moveDirection.x *= speed;
+                moveDirection.y = oldGravity;
+                moveDirection.z *= speed;
+
                 if (controller.isGrounded)
                 {
-                    moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-                    moveDirection *= speed;
+                    
+                    //moveDirection *= speed;
                     if (Input.GetKey(KeyBind.keys["Jump"])) //if jump key is pressed
                     {
                         moveDirection.y = jumpSpeed; //move up at the rate of jumpSpeed
@@ -90,7 +97,7 @@ namespace GUI1
                 horizontal--;
             }
 
-            direction = new Vector3(horizontal, 0f, vertical).normalized; //give a vector3 with a magnitude of 1
+            moveDirection = new Vector3(horizontal, 0f, vertical).normalized; //give a vector3 with a magnitude of 1
         }
 
         /// <summary>Determines the speed to move at based on key inputs.</summary>
