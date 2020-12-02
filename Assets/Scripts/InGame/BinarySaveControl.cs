@@ -11,7 +11,7 @@ namespace GUI1
         {
             BinaryFormatter formatter = new BinaryFormatter(); //make formatter
 
-            string path = Application.dataPath + "kittens.jpg"; //give file secret name
+            string path = Application.persistentDataPath + "/kittens.jpg"; //give file secret name
 
             FileStream stream = new FileStream(path, FileMode.Create); //make file
 
@@ -24,7 +24,7 @@ namespace GUI1
 
         public static PlayerData LoadPlayer()
         {
-            string path = Application.dataPath + "kittens.jpg"; //secret location code
+            string path = Application.persistentDataPath + "/kittens.jpg"; //secret location code
 
             if (File.Exists(path)) //if exists
             {

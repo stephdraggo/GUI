@@ -33,8 +33,8 @@ namespace GUI1
             {
                 player.skills[i].skillName = tempName[i];
                 player.skills[i].tempValue = 0;
-                UpdateDisplay(i);
             }
+            UpdateDisplay();
         }
         #endregion
         #region Functions
@@ -46,7 +46,7 @@ namespace GUI1
                 statPoints--;
                 player.skills[_index].tempValue++;
             }
-            UpdateDisplay(_index);
+            UpdateDisplay();
         }
         public void TakeStat(int _index)
         {
@@ -55,7 +55,7 @@ namespace GUI1
                 statPoints++;
                 player.skills[_index].tempValue--;
             }
-            UpdateDisplay(_index);
+            UpdateDisplay();
         }
         public void ResetStats()
         {
@@ -65,16 +65,19 @@ namespace GUI1
                 for (int i = 0; i < player.skills.Length; i++)
                 {
                     player.skills[i].tempValue = 0;
-                    UpdateDisplay(i);
                 }
             }
+            UpdateDisplay();
         }
         #endregion
         #region display
-        public void UpdateDisplay(int i)
+        public void UpdateDisplay()
         {
             pointsDisplay.text = "Points left: " + statPoints.ToString();
-            statDisplay[i].text = player.skills[i].skillName + ": " + (player.skills[i].baseValue + player.skills[i].tempValue).ToString();
+            for (int i = 0; i < player.skills.Length; i++)
+            {
+                statDisplay[i].text = player.skills[i].skillName + ": " + (player.skills[i].baseValue + player.skills[i].tempValue).ToString();
+            }
         }
         public void UpdateName(string _newName)
         {
@@ -129,6 +132,9 @@ namespace GUI1
                     charClass = CharacterClass.Witch;
                     break;
             }
+
+            UpdateDisplay();
+
         }
         #endregion
         #endregion

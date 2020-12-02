@@ -12,14 +12,16 @@ namespace GUI1
         public static bool isDead;
         public int level;
         public CharacterClass playerClass;
+
         [System.Serializable]
         public struct StatBlock //for health, mana, stamina
         {
             [Min(0)] public float current;
             [Min(0)] public float max;
-
         }
         public StatBlock[] lifeForce = new StatBlock[3]; //health, mana, stamina
+
+        [System.Serializable]
         public struct Skill //for strength, endurance, agility, charisma, aura & thought
         {
             public string skillName;
@@ -50,11 +52,22 @@ namespace GUI1
         }
 
         #endregion
+        #region Start
+        private void Start()
+        {
+            Load();
+            Save();
+            Load();
+
+            CheckStats();
+        }
+        #endregion
+        #region Functions
+        #region save and load
         public void Save()
         {
             BinarySaveControl.SavePlayer(this);
         }
-
         public void Load()
         {
             PlayerData data = BinarySaveControl.LoadPlayer();
@@ -85,8 +98,25 @@ namespace GUI1
                 skills[i].totalValue = skills[i].baseValue + skills[i].tempValue;
             }
             #endregion
-
-
         }
+        #endregion
+        #region stats
+        private void CheckStats()
+        {
+            //check skill total values
+            for (int i = 0; i < skills.Length; i++)
+            {
+                skills[i].totalValue = skills[i].baseValue + skills[i].tempValue;
+            }
+
+            //health is one part strength, three parts endurance
+            lifeForce[0].max = skills[0].totalValue + skills[1].totalValue * 3;
+            //stamina is three parts endurance, one part agility
+            lifeForce[1].max = skills[1].totalValue * 3 + skills[2].totalValue;
+            //mana is one part aura, one part thought
+            lifeForce[2].max = skills[4].totalValue + skills[5].totalValue;
+        }
+        #endregion
+        #endregion
     }
 }
