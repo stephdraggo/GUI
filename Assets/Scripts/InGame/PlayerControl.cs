@@ -60,6 +60,8 @@ namespace GUI1
             Load();
 
             CheckStats();
+
+            
         }
         #endregion
         #region Functions

@@ -27,10 +27,10 @@ namespace GUI1
         #region Start
         void Start()
         {
-            if (statOwner.TryGetComponent<PlayerControl>(out PlayerControl player)) //if there is a PlayerControl attached to the stat owner
+            if (statOwner.TryGetComponent<PlayerControl>(out PlayerControl _player)) //if there is a PlayerControl attached to the stat owner
             {
                 isPlayer = true; //tell the script this is a player object
-                max = player.lifeForce[statIndex].max; //set max to the player's max relevent stat
+                player = _player;
             }
             else //if there is eg enemy control script instead
             {
@@ -46,6 +46,9 @@ namespace GUI1
                 //try catch is here for the first assignment since it's calling things that aren't functional yet
                 try { current = player.lifeForce[statIndex].current; } //update current stat
                 catch { current = 10; }
+
+                //current = player.lifeForce[statIndex].current;
+                max = player.lifeForce[statIndex].max; //set max to the player's max relevent stat
             }
 
             healthBar.fillAmount = Mathf.Clamp01(current / max); //tell the image how far to fill
