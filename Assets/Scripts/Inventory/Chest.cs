@@ -12,8 +12,21 @@ namespace GUI3.Inventories
 
         private void Start()
         {
+            #region add some default items
+            //add some items in here (theoretically could have one of each item)
             chestInv.Add(ItemData.CreateItem(Random.Range(0, 2)));
-            chestInv.Add(ItemData.CreateItem(Random.Range(100, 102)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(0, 2)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(200, 212)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(300, 302)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(300, 302)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(500, 502)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(500, 502)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(600, 602)));
+            chestInv.Add(ItemData.CreateItem(Random.Range(600, 602)));
+            #endregion
         }
         /*
         private void OnGUI()

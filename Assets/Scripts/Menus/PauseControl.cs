@@ -16,7 +16,6 @@ namespace GUI1
         #endregion
         void Start()
         {
-            inventory = gameObject.GetComponent<GUI3.Inventories.Inventory>();
             Resume();
 #if UNITY_EDITOR
             //make sure both panels are not active
@@ -45,6 +44,7 @@ namespace GUI1
                     Pause();
                     invPanel.SetActive(true); //acitvate inventory panel
                     pausePanel.SetActive(false); //acitvate inventory panel
+                    inventory.SortAndShowInventory();
                 }
                 else
                 {

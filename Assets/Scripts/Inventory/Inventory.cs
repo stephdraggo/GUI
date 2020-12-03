@@ -13,6 +13,7 @@ namespace GUI3.Inventories
         #region general inventory info
         public List<Item> inventory = new List<Item>();
         public Item selectedItem;
+        public GameObject selectedButton;
         [SerializeField] private PlayerControl player;
         public static int money;
         #endregion
@@ -34,6 +35,8 @@ namespace GUI3.Inventories
         private string[] sortByType;
         private List<GameObject> itemButtons;
 
+        public GameObject itemPrefab;
+        public Transform itemParent;
 
         [Header("Equipment")]
         public Equipment[] equipmentSlots;
@@ -74,7 +77,7 @@ namespace GUI3.Inventories
             inventory.Add(ItemData.CreateItem(Random.Range(600, 602)));
             inventory.Add(ItemData.CreateItem(Random.Range(600, 602)));
             #endregion
-            selectedItem = inventory[0];
+
         }
 
         void Update()
@@ -125,39 +128,40 @@ namespace GUI3.Inventories
                     break;
 
                 case ItemType.Weapon:
-                    buttonText.text = "Equip";
+                    if (equipmentSlots[2].currentlyEquipped == null || selectedItem.Name != equipmentSlots[2].currentlyEquipped.name)
+                    {
+                        buttonText.text = "Equip";
+                    }
+                    else
+                    {
+                        buttonText.text = "Unequip";
+                    }
                     useButton.onClick.AddListener(EquipItem);
-                    EquipItem();
                     break;
 
                 case ItemType.Wearable:
                     buttonText.text = "Equip";
                     useButton.onClick.AddListener(EquipItem);
-                    EquipItem();
                     break;
 
                 case ItemType.Crafting:
                     buttonText.text = "Use";
                     useButton.onClick.AddListener(UseItem);
-                    UseItem();
                     break;
 
                 case ItemType.Ingredients:
                     buttonText.text = "Use";
                     useButton.onClick.AddListener(UseItem);
-                    UseItem();
                     break;
 
                 case ItemType.Potions:
                     buttonText.text = "Consume";
                     useButton.onClick.AddListener(ConsumeItem);
-                    ConsumeItem();
                     break;
 
                 case ItemType.Scrolls:
                     buttonText.text = "Use";
                     useButton.onClick.AddListener(UseItem);
-                    UseItem();
                     break;
 
                 case ItemType.Quest:
@@ -178,32 +182,73 @@ namespace GUI3.Inventories
         {
             //crafting, ingredients, scrolls
             Debug.Log("Used " + selectedItem.Name);
+            RidItem();
         }
         private void ConsumeItem()
         {
             //food, potions
             Debug.Log("Consumed " + selectedItem.Name);
+            player.lifeForce[0].current += selectedItem.EffectAmount;
+            RidItem();
         }
         private void EquipItem()
         {
             //armour, weapons
             Debug.Log("Equipped " + selectedItem.Name);
+
+            //if we have something equiped then remove it
+            if (equipmentSlots[2].currentlyEquipped != null)
+            {
+                Destroy(equipmentSlots[2].currentlyEquipped);
+            }
+            GameObject curItem = Instantiate(selectedItem.Mesh, equipmentSlots[2].equipLocation);
+            equipmentSlots[2].currentlyEquipped = curItem;
+            curItem.name = selectedItem.Name;
+
+            //if this is equipped, then remove it
+            if (selectedItem.Name == equipmentSlots[2].currentlyEquipped.name)
+            {
+                Destroy(equipmentSlots[2].currentlyEquipped);
+            }
+
+            selectedItem = null;
         }
         public void DropItem()
         {
             //spawn thing in world and delete from inventory or send to chest or shop if there is one open
+            GameObject newObject = Instantiate(itemPrefab, player.transform.position, Quaternion.identity, itemParent);
+            ItemHandler newIt = newObject.AddComponent<ItemHandler>();
+            newIt.itemId = selectedItem.ID;
+            newIt.itemType = selectedItem.Type;
+            newIt.amount = 1;
+            newObject.name = selectedItem.Name;
+            RidItem();
+        }
+        private void RidItem()
+        {
+            inventory.Remove(selectedItem);
+            selectedItem = null;
+            Destroy(selectedButton);
         }
         #endregion
         public void SortAndShowInventory()
         {
-            foreach (Item item in inventory)
+            // foreach (Item item in inventory)
+            for (int i = 0; i < inventory.Count; i++)
             {
                 GameObject newButton = Instantiate(itemButtonPrefab, buttonParent);
-                newButton.GetComponentInChildren<Text>().text = item.Name + ": " + item.Amount.ToString();
+                newButton.GetComponentInChildren<Text>().text = inventory[i].Name + ": " + inventory[i].Amount.ToString();
 
-                newButton.name = item.Name;
+                Item _item = inventory[i];
+                newButton.GetComponent<Button>().onClick.AddListener(() => SelectItem(_item, newButton));
 
+                newButton.name = inventory[i].Name;
             }
+        }
+        private void SelectItem(Item item, GameObject button)
+        {
+            selectedItem = item;
+            selectedButton = button;
         }
         #endregion
 

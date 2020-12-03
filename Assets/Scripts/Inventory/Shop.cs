@@ -13,14 +13,21 @@ namespace GUI3.Inventories
         //public ApprovalDialogue dlg;
         private void Start()
         {
+            #region add some default items
+            //add some items in here (theoretically could have one of each item)
             shopInv.Add(ItemData.CreateItem(Random.Range(0, 2)));
             shopInv.Add(ItemData.CreateItem(Random.Range(0, 2)));
-            shopInv.Add(ItemData.CreateItem(Random.Range(100, 102)));
-            shopInv.Add(ItemData.CreateItem(Random.Range(100, 102)));
-            shopInv.Add(ItemData.CreateItem(Random.Range(100, 102)));
-            shopInv.Add(ItemData.CreateItem(Random.Range(100, 102)));
-            shopInv.Add(ItemData.CreateItem(Random.Range(100, 102)));
-            shopInv.Add(ItemData.CreateItem(Random.Range(100, 102)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(200, 212)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(300, 302)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(300, 302)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(500, 502)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(500, 502)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(600, 602)));
+            shopInv.Add(ItemData.CreateItem(Random.Range(600, 602)));
+            #endregion
         }
         /*
         private void OnGUI()

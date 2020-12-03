@@ -275,7 +275,7 @@ namespace GUI3.Inventories
                     _description = "Munchies and Crunchies";
                     _value = 1;
                     _amount = 1;
-                    _icon = "Food/Apple";
+                    _icon = "Food/Apple.png";
                     _mesh = "Food/Apple";
                     _type = ItemType.Consumable;
                     _effect = 10;
@@ -289,7 +289,7 @@ namespace GUI3.Inventories
                 Value = _value,
                 Amount = _amount,
                 Type = _type,
-                Icon = Resources.Load("Icon/" + _icon) as Sprite,
+                Icon = Resources.Load<Sprite>("Icon/" + _icon),
                 Mesh = Resources.Load("Mesh/" + _mesh) as GameObject,
                 EffectAmount = _effect
             };
