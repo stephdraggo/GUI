@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GUI3.Inventories
 {
@@ -8,11 +9,22 @@ namespace GUI3.Inventories
     {
         public List<Item> shopInv = new List<Item>();
         public Item selectedItem;
-        public bool showShopInv;
-        public Vector2 scr;
+        public Inventory playerInv;
+
+        [Header("Shown Item Variables")]
+        #region item display
+        public GameObject itemShow;
+        public Text itemName;
+        public Image itemIcon;
+        public Text itemDescription;
+        #endregion
+
+
         //public ApprovalDialogue dlg;
         private void Start()
         {
+            playerInv = FindObjectOfType<Inventory>();
+
             #region add some default items
             //add some items in here (theoretically could have one of each item)
             shopInv.Add(ItemData.CreateItem(Random.Range(0, 2)));
@@ -29,7 +41,7 @@ namespace GUI3.Inventories
             shopInv.Add(ItemData.CreateItem(Random.Range(600, 602)));
             #endregion
         }
-        /*
+        
         private void OnGUI()
         {
             scr.x = Screen.width / 16;
@@ -54,9 +66,9 @@ namespace GUI3.Inventories
                     {
                         if (GUI.Button(new Rect(10.5f * scr.x, 6.75f * scr.y, scr.x, 0.25f * scr.y), "Buy Item"))
                         {
-                            LinearInventory.money -= selectedItem.Value;
+                            Inventory.money -= selectedItem.Value;
                             //add to player
-                            LinearInventory.inv.Add(ItemData.CreateItem(selectedItem.ID));
+                            playerInv.AddItem(ItemData.CreateItem(selectedItem.ID));
                             //remove from shop
                             shopInv.Remove(selectedItem);
                             selectedItem = null;
@@ -65,16 +77,8 @@ namespace GUI3.Inventories
                     }
 
                 }
-                if (GUI.Button(new Rect(0.25f * scr.x, 8.5f * scr.y, scr.x, 0.5f * scr.y), "Exit Shop"))
-                {
-                    showShopInv = false;
-                    LinearInventory.showInv = false;
-                    LinearInventory.currentShop = null;
-                    dlg.showDlg = true;
-                }
-                GUI.Box(new Rect(7f * scr.x, 8.5f * scr.y, 2 * scr.x, 0.5f * scr.y), "Money $" + LinearInventory.money);
 
             }
-        }*/
+        }
     }
 }
