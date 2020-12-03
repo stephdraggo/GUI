@@ -12,9 +12,11 @@ namespace GUI1
         [Header("Reference Variables")]
         public static bool paused;
         public GameObject pausePanel, optionsPanel, invPanel;
+        public GUI3.Inventories.Inventory inventory;
         #endregion
         void Start()
         {
+            inventory = gameObject.GetComponent<GUI3.Inventories.Inventory>();
             Resume();
 #if UNITY_EDITOR
             //make sure both panels are not active
@@ -24,7 +26,7 @@ namespace GUI1
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyBind.keys["Pause"])||Input.GetKeyDown(KeyCode.Escape)) //if pause key or escape is pressed
+            if (Input.GetKeyDown(KeyBind.keys["Pause"]) || Input.GetKeyDown(KeyCode.Escape)) //if pause key or escape is pressed
             {
                 if (paused) //if paused
                 {
@@ -38,11 +40,16 @@ namespace GUI1
 
             if (Input.GetKeyDown(KeyBind.keys["Inventory"])) //if inventory key is pressed
             {
-                //for this build do nothing
-                
-
-                //invPanel.SetActive(true); //acitvate inventory panel
-
+                if (!invPanel.activeSelf)
+                {
+                    Pause();
+                    invPanel.SetActive(true); //acitvate inventory panel
+                    pausePanel.SetActive(false); //acitvate inventory panel
+                }
+                else
+                {
+                    Resume();
+                }
             }
         }
 
@@ -53,14 +60,9 @@ namespace GUI1
             Time.timeScale = 1; //set time going
             Cursor.lockState = CursorLockMode.Locked; //lock cursor
 
-            if (optionsPanel.activeSelf) //if in options panel
-            {
-                optionsPanel.SetActive(false); //disable options panel
-            }
-            else //if in pause panel
-            {
-                pausePanel.SetActive(false); //disable pause menu
-            }
+            optionsPanel.SetActive(false); //disable options panel
+            invPanel.SetActive(false); //disable inv panel
+            pausePanel.SetActive(false); //disable pause menu
         }
         public void Pause()
         {

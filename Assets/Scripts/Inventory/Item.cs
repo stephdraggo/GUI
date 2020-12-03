@@ -12,7 +12,7 @@ namespace GUI3.Inventories
         [SerializeField] private string description;
         [SerializeField] private int eValue;
         [SerializeField] private int amount;
-        [SerializeField] private Texture2D icon;
+        [SerializeField] private Sprite icon;
         [SerializeField] private GameObject mesh;
         [SerializeField] private ItemType type;
         [SerializeField] private int effectAmount;
@@ -44,7 +44,7 @@ namespace GUI3.Inventories
             get => amount;
             set => amount = value;
         }
-        public Texture2D Icon
+        public Sprite Icon
         {
             get => icon;
             set => icon = value;
@@ -70,9 +70,9 @@ namespace GUI3.Inventories
 
     public enum ItemType
     {
-        Food,
+        Consumable,
         Weapon,
-        Apparel,
+        Wearable,
         Crafting,
         Ingredients,
         Potions,

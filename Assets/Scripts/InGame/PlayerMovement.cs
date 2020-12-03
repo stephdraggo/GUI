@@ -36,7 +36,9 @@ namespace GUI1
         {
             if (!PlayerControl.isDead) //if player is alive
             {
-                float oldGravity = moveDirection.y;
+                Interact();
+
+                    float oldGravity = moveDirection.y;
 
                 Direction();
                 Speed();
@@ -127,7 +129,7 @@ namespace GUI1
 
         void Interact()
         {
-            if (Input.GetButtonDown("Interact"))
+            if (Input.GetKeyDown(KeyBind.keys["Interact"]))
             {
                 Ray ray;
                 RaycastHit hitInfo;

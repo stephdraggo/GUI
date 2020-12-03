@@ -1,8 +1,8 @@
 ﻿using GUI1;
-using System;
-using System.Collections;
+using System.Linq; //conCAT
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GUI3.Inventories
 {
@@ -10,18 +10,35 @@ namespace GUI3.Inventories
     {
         #region Variables
         [Header("Inventory Variables")]
+        #region general inventory info
         public List<Item> inventory = new List<Item>();
         public Item selectedItem;
         [SerializeField] private PlayerControl player;
+        public static int money;
+        #endregion
+
+        [Header("Shown Item Variables")]
+        #region item display
+        public GameObject itemShow;
+        public Text itemName;
+        public Image itemIcon;
+        public Text itemDescription;
+        public Button useButton;
+        public Text buttonText;
+        #endregion
 
         [Header("Display Variables")]
-        [SerializeField] private bool showInv = false;
+        public GameObject itemButtonPrefab;
+        public Transform buttonParent;
         private string sortType = "";
+        private string[] sortByType;
+        private List<GameObject> itemButtons;
+
 
         [Header("Equipment")]
         public Equipment[] equipmentSlots;
 
-        [Serializable]
+        [System.Serializable]
         public struct Equipment
         {
             public string slotName;
@@ -30,27 +47,48 @@ namespace GUI3.Inventories
             public Item item;
         }
 
-#if UNITY_EDITOR
-        private Vector2 scr;
-        private Vector2 scrollPosition;
-#endif
         #endregion
 
         void Start()
         {
+            player = gameObject.GetComponent<PlayerControl>();
 
+            #region get array of sorting types
+            string[] first = new string[] { "All" };
+            string[] second = System.Enum.GetNames(typeof(ItemType));
+            string[] sortByType = first.Concat(second).ToArray();
+            #endregion
+
+            #region add some default items
+            //add some items in here (theoretically could have one of each item)
+            inventory.Add(ItemData.CreateItem(Random.Range(0, 2)));
+            inventory.Add(ItemData.CreateItem(Random.Range(0, 2)));
+            inventory.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            inventory.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            inventory.Add(ItemData.CreateItem(Random.Range(100, 103)));
+            inventory.Add(ItemData.CreateItem(Random.Range(200, 212)));
+            inventory.Add(ItemData.CreateItem(Random.Range(300, 302)));
+            inventory.Add(ItemData.CreateItem(Random.Range(300, 302)));
+            inventory.Add(ItemData.CreateItem(Random.Range(500, 502)));
+            inventory.Add(ItemData.CreateItem(Random.Range(500, 502)));
+            inventory.Add(ItemData.CreateItem(Random.Range(600, 602)));
+            inventory.Add(ItemData.CreateItem(Random.Range(600, 602)));
+            #endregion
+            selectedItem = inventory[0];
         }
 
         void Update()
         {
-
+            if (selectedItem != null)
+            {
+                ShowItem();
+            }
+            else
+            {
+                itemShow.SetActive(false);
+            }
         }
         #region Functions
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="_id"></param>
-        /// <returns></returns>
         public Item FindItem(int _id)
         {
             return inventory.Find(items => items.ID == _id);
@@ -60,159 +98,115 @@ namespace GUI3.Inventories
             Item foundItem = inventory.Find(items => items.ID == item.ID);
             if (foundItem != null)
             {
-                foundItem.Amount+=item.Amount;
+                foundItem.Amount += item.Amount;
             }
             else
             {
                 inventory.Add(item);
             }
         }
-        #endregion
-
-#if UNITY_EDITOR
-        private void OnGUI()
+        public void ShowItem()
         {
-            scr.x = Screen.width / 16;
-            scr.y = Screen.height / 9;
+            #region display item details
+            itemShow.SetActive(true);
+            itemName.text = selectedItem.Name;
+            itemIcon.sprite = selectedItem.Icon;
+            itemDescription.text = selectedItem.Description;
+            #endregion
 
-            if (showInv)
-            {
-                GUI.Box(new Rect(0, 0, Screen.width, Screen.height), ""); //box of size screen
+            #region set ui by type
 
-                string[] itemTypes = Enum.GetNames(typeof(ItemType)); //array of item type names
-                int itemTypeCount = itemTypes.Length; //number of item types
-
-                for (int i = 0; i < itemTypeCount; i++) //for every item type
-                {
-                    if (GUI.Button(new Rect((4 + i) * scr.x, 0, scr.x, 0.25f * scr.y), itemTypes[i])) //make button
-                    {
-                        sortType = itemTypes[i];
-                    }
-                }
-
-                Display();
-
-                if (selectedItem != null)
-                {
-                    OpenItem();
-                }
-            }
-        }
-
-        private void Display()
-        {
-            if (sortType == "")
-            {
-                scrollPosition = GUI.BeginScrollView(new Rect(0, 0.25f * scr.y, 3.75f * scr.x, 8.5f * scr.y), scrollPosition, new Rect(0, 0, 0, inventory.Count * .25f * scr.y), false, true);
-
-                for (int i = 0; i < inventory.Count; i++)
-                {
-                    if (GUI.Button(new Rect(0.5f * scr.x, (1 + i) * 0.25f * scr.y, 3 * scr.x, 0.25f * scr.y), inventory[i].Name))
-                    {
-                        selectedItem = inventory[i];
-                    }
-                }
-                GUI.EndScrollView();
-            }
-            else
-            {
-                ItemType type = (ItemType)Enum.Parse(typeof(ItemType), sortType); //get enum from string
-
-                int slotCount = 0;
-
-                for (int i = 0; i < inventory.Count; i++)
-                {
-                    if (inventory[i].Type == type)
-                    {
-                        if (GUI.Button(new Rect(0.5f * scr.x, (1 + slotCount) * 0.25f * scr.y, 3 * scr.x, 0.25f * scr.y), inventory[i].Name))
-                        {
-                            selectedItem = inventory[i];
-                        }
-                        slotCount++;
-                    }
-                }
-            }
-        }
-        private void OpenItem()
-        {
-            GUI.Box(new Rect(4.25f * scr.x, 0.5f * scr.y, 3 * scr.x, 3 * scr.y), selectedItem.Icon);
-
-            GUI.Box(new Rect(4.55f * scr.x, 3.5f * scr.y, 2.5f * scr.x, 0.5f * scr.y), selectedItem.Name);
-
-            GUI.Box(new Rect(4.25f * scr.x, 4 * scr.y, 3 * scr.x, 3 * scr.y), selectedItem.Description + "\nValue: " + selectedItem.Value + "\nAmount: " + selectedItem.Amount);
-
+            useButton.onClick.RemoveAllListeners(); //add specific listeners in switch
             switch (selectedItem.Type)
             {
-                #region food
-                case ItemType.Food:
-                    if (player.lifeForce[0].current < player.lifeForce[0].max) //if not at max health
-                    {
-                        if (GUI.Button(new Rect(4.5f * scr.x, 6.5f * scr.y, scr.x, 0.25f * scr.y), "Eat")) //enable eat
-                        {
-                            player.lifeForce[0].current += selectedItem.EffectAmount; //heal by amount
-
-                            selectedItem.Amount--; //decrease item
-                            if (selectedItem.Amount <= 0) //if none left
-                            {
-                                inventory.Remove(selectedItem); //remove item
-                                selectedItem = null; //select nothing
-                                break;
-                            }
-                        }
-                    }
+                case ItemType.Consumable:
+                    buttonText.text = "Consume";
+                    useButton.onClick.AddListener(ConsumeItem);
                     break;
-                #endregion
 
                 case ItemType.Weapon:
-                    if (equipmentSlots[2].currentlyEquipped == null || selectedItem.ID != equipmentSlots[2].item.ID) //if selected weapon not equipped
-                    {
-                        if (GUI.Button(new Rect(4.5f * scr.x, 6.5f * scr.y, scr.x, 0.25f * scr.y), "Equip")) //enable equip
-                        {
-                            if (equipmentSlots[2].currentlyEquipped != null) //if another weapon equipped
-                            {
-                                Destroy(equipmentSlots[2].currentlyEquipped); //get rid of it
-                            }
-                            GameObject currentItem = Instantiate(selectedItem.Mesh, equipmentSlots[2].equipLocation); //spawn new weapon object
-                            equipmentSlots[2].currentlyEquipped = currentItem; //set as equipped
-                            equipmentSlots[2].item = selectedItem; //set item
-                        }
-                    }
-                    else
-                    {
-                        if (GUI.Button(new Rect(4.5f * scr.x, 6.5f * scr.y, scr.x, 0.25f * scr.y), "Unequip")) //enable unequip
-                        {
-                            Destroy(equipmentSlots[2].currentlyEquipped); //get rid of it
-                            equipmentSlots[2].item = null; //nothing equipped
-                        }
-                    }
+                    buttonText.text = "Equip";
+                    useButton.onClick.AddListener(EquipItem);
+                    EquipItem();
                     break;
 
-                case ItemType.Apparel:
+                case ItemType.Wearable:
+                    buttonText.text = "Equip";
+                    useButton.onClick.AddListener(EquipItem);
+                    EquipItem();
                     break;
 
                 case ItemType.Crafting:
+                    buttonText.text = "Use";
+                    useButton.onClick.AddListener(UseItem);
+                    UseItem();
                     break;
 
                 case ItemType.Ingredients:
+                    buttonText.text = "Use";
+                    useButton.onClick.AddListener(UseItem);
+                    UseItem();
                     break;
 
                 case ItemType.Potions:
+                    buttonText.text = "Consume";
+                    useButton.onClick.AddListener(ConsumeItem);
+                    ConsumeItem();
                     break;
 
                 case ItemType.Scrolls:
+                    buttonText.text = "Use";
+                    useButton.onClick.AddListener(UseItem);
+                    UseItem();
                     break;
 
                 case ItemType.Quest:
+                    buttonText.text = "N/A";
                     break;
 
                 case ItemType.Money:
+                    buttonText.text = "N/A";
                     break;
-
 
                 default:
                     break;
             }
+            #endregion
         }
+        #region using items
+        private void UseItem()
+        {
+            //crafting, ingredients, scrolls
+            Debug.Log("Used " + selectedItem.Name);
+        }
+        private void ConsumeItem()
+        {
+            //food, potions
+            Debug.Log("Consumed " + selectedItem.Name);
+        }
+        private void EquipItem()
+        {
+            //armour, weapons
+            Debug.Log("Equipped " + selectedItem.Name);
+        }
+        public void DropItem()
+        {
+            //spawn thing in world and delete from inventory or send to chest or shop if there is one open
+        }
+        #endregion
+        public void SortAndShowInventory()
+        {
+            foreach (Item item in inventory)
+            {
+                GameObject newButton = Instantiate(itemButtonPrefab, buttonParent);
+                newButton.GetComponentInChildren<Text>().text = item.Name + ": " + item.Amount.ToString();
+
+                newButton.name = item.Name;
+
+            }
+        }
+        #endregion
+
     }
-#endif
+
 }
