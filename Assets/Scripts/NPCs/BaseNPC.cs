@@ -8,7 +8,8 @@ namespace GameSystems.NPCs
     {
         #region Variables
         [SerializeField]
-        protected string name;
+        protected string npcName;
+        public static bool showDialogue;
         #endregion
 
         #region Functions

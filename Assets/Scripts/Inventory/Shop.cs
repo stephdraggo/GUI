@@ -46,17 +46,24 @@ namespace GUI3.Inventories
         }
         private void BuyItem(int _amount)
         {
-            Inventory.money -= selectedItem.Value*_amount;
-            for (int i = 0; i < _amount; i++)
+            if (Inventory.money >= selectedItem.Value * _amount)
             {
-                playerInv.AddItem(selectedItem.ID);
-                RemoveItem();
+                Inventory.money -= selectedItem.Value * _amount;
+                for (int i = 0; i < _amount; i++)
+                {
+                    playerInv.AddItem(selectedItem.ID);
+                    RemoveItem();
+                }
+            }
+            else
+            {
+                Debug.LogError("not enough money");
             }
             SortAndShowInventory();
         }
         public void SellItem()
         {
-            Inventory.money += playerInv.selectedItem.Value/2;
+            Inventory.money += playerInv.selectedItem.Value / 2;
             AddItem(playerInv.selectedItem.ID);
             playerInv.RemoveItem();
             SortAndShowInventory();
@@ -66,6 +73,5 @@ namespace GUI3.Inventories
             base.ShowItem();
             itemDescription.text = selectedItem.Description + "\n\nCost: $" + selectedItem.Value.ToString();
         }
-
     }
 }

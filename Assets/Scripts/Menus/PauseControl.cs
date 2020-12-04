@@ -11,7 +11,7 @@ namespace GUI1
         #region Variables
         [Header("Reference Variables")]
         public static bool paused;
-        public GameObject pausePanel, optionsPanel, invPanel;
+        public GameObject pausePanel, optionsPanel, invPanel, dialoguePanel;
         public GUI3.Inventories.Inventory inventory;
         #endregion
         void Start()
@@ -25,6 +25,16 @@ namespace GUI1
 
         void Update()
         {
+            if (GameSystems.NPCs.BaseNPC.showDialogue)
+            {
+                dialoguePanel.SetActive(true);
+                Pause();
+            }
+            else if(dialoguePanel.activeSelf)
+            {
+                dialoguePanel.SetActive(false);
+                Resume();
+            }
             if (Input.GetKeyDown(KeyBind.keys["Pause"]) || Input.GetKeyDown(KeyCode.Escape)) //if pause key or escape is pressed
             {
                 if (paused) //if paused
@@ -41,10 +51,7 @@ namespace GUI1
             {
                 if (!invPanel.activeSelf)
                 {
-                    Pause();
-                    invPanel.SetActive(true); //acitvate inventory panel
-                    pausePanel.SetActive(false); //acitvate inventory panel
-                    inventory.SortAndShowInventory();
+                    ShowInv();
                 }
                 else
                 {
@@ -54,6 +61,13 @@ namespace GUI1
         }
 
         #region Functions
+        public void ShowInv()
+        {
+            Pause();
+            invPanel.SetActive(true); //acitvate inventory panel
+            pausePanel.SetActive(false); //acitvate inventory panel
+            inventory.SortAndShowInventory();
+        }
         public void Resume()
         {
             paused = false; //set bool to not paused

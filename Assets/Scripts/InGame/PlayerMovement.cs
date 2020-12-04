@@ -38,7 +38,7 @@ namespace GUI1
             {
                 Interact();
 
-                    float oldGravity = moveDirection.y;
+                float oldGravity = moveDirection.y;
 
                 Direction();
                 Speed();
@@ -57,7 +57,7 @@ namespace GUI1
 
                 if (controller.isGrounded)
                 {
-                    
+
                     //moveDirection *= speed;
                     if (Input.GetKey(KeyBind.keys["Jump"])) //if jump key is pressed
                     {
@@ -136,7 +136,7 @@ namespace GUI1
 
                 ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
 
-                float distance = 5f;
+                float distance = 15f;
                 int layerMask = LayerMask.NameToLayer("Interactable"); //get layer number
                 layerMask = 1 << layerMask; //bit shift to get actual number
                 if (Physics.Raycast(ray, out hitInfo, distance, layerMask))
@@ -147,10 +147,110 @@ namespace GUI1
                         npc.Interact();
                     }
                     #endregion
+                    #region Shop or chest
+                    if (hitInfo.collider.TryGetComponent(out GUI3.Inventories.InvBase inv))
+                    {
+                        //set which shop/chest it is here
+
+                        FindObjectOfType<PauseControl>().ShowInv();
+                    }
+                    #endregion
+                    #region world item
+                    if (hitInfo.collider.TryGetComponent(out GUI3.Inventories.ItemHandler _item))
+                    {
+                        GetComponent<GUI3.Inventories.Inventory>().AddItem(_item.itemId);
+                        Destroy(_item.gameObject);
+                    }
+                    #endregion
                 }
 
 
             }
+            /*
+            #region NPC 
+            //and that hits info is tagged NPC
+            if (hitInfo.collider.CompareTag("NPC"))
+            {
+                if (hitInfo.collider.GetComponent<NPCDialogueArray>())
+                {
+                    NPCDialogueArray character = hitInfo.collider.GetComponent<NPCDialogueArray>();
+                    dlgMaster.characterNPCName = character.characterName;
+                    dlgMaster.currentDialogue = character.dialogueText;
+                    dlgMaster.SetUp();
+                    dlgMaster.dialoguePanel.SetActive(true);
+
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    Camera.main.GetComponent<Player.MouseLook>().enabled = false;
+                    GetComponent<Player.MouseLook>().enabled = false;
+
+                }
+                #region HardCode Dialogue
+                //Debug that we hit a NPC    
+                Debug.Log("Talk to the NPC");
+                //THIS ONE HERE IS FOR DIALOGUE
+                if (hitInfo.collider.GetComponent<Dialogue>())
+                {
+                    hitInfo.collider.GetComponent<Dialogue>().showDlg = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    Camera.main.GetComponent<Player.MouseLook>().enabled = false;
+                    GetComponent<Player.MouseLook>().enabled = false;
+                }
+
+                //THIS ONE HERE IS FOR OptionLinearDialogue
+                if (hitInfo.collider.GetComponent<OptionLinearDialogue>())
+                {
+                    hitInfo.collider.GetComponent<OptionLinearDialogue>().showDlg = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    Camera.main.GetComponent<Player.MouseLook>().enabled = false;
+                    GetComponent<Player.MouseLook>().enabled = false;
+                }
+
+                //THIS ONE HERE IS FOR ApprovalDialogue
+                if (hitInfo.collider.GetComponent<ApprovalDialogue>())
+                {
+                    hitInfo.collider.GetComponent<ApprovalDialogue>().showDlg = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    Camera.main.GetComponent<Player.MouseLook>().enabled = false;
+                    GetComponent<Player.MouseLook>().enabled = false;
+                }
+                #endregion
+            }
+            #endregion
+            #region Item
+            //and that hits info is tagged Item
+            if (hitInfo.collider.CompareTag("Item"))
+            {
+                //Debug that we hit an Item   
+                Debug.Log("Pick Up Item");
+                ItemHandler handler = hitInfo.transform.GetComponent<ItemHandler>();
+                if (handler != null)
+                {
+                    player.quest.goal.ItemCollected(handler.itemId);
+                    handler.OnCollection();
+                }
+            }
+            #endregion
+
+            #region Chest
+            if (hitInfo.collider.CompareTag("Chest"))
+            {
+                Chest chest = hitInfo.transform.GetComponent<Chest>();
+                if (chest != null)
+                {
+                    chest.showChestInv = true;
+                    LinearInventory.showInv = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    Time.timeScale = 0;
+                    LinearInventory.currentChest = chest;
+                }
+            }
+            #endregion
+            */
         }
     }
 }

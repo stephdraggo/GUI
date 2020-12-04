@@ -169,6 +169,7 @@ namespace GUI3.Inventories
             newIt.itemType = selectedItem.Type;
             newIt.amount = 1;
             newObject.name = selectedItem.Name;
+            newObject.layer = LayerMask.NameToLayer("Interactable");
 
             RemoveItem();
         }
