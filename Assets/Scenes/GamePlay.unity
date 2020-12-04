@@ -4117,7 +4117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &725963588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6547,7 +6547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1212438746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6789,9 +6789,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 64409675}
-        m_MethodName: Resume
-        m_Mode: 1
+      - m_Target: {fileID: 1212438745}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9929,7 +9929,7 @@ GameObject:
   - component: {fileID: 8074845959062919864}
   - component: {fileID: 8104491609246699792}
   - component: {fileID: 8093996706988709038}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: axe_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9948,7 +9948,7 @@ GameObject:
   - component: {fileID: 8103586540355770174}
   - component: {fileID: 8093655750799062800}
   - component: {fileID: 8207495542282644738}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: stump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9965,6 +9965,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8074411581121148664}
   - component: {fileID: 8072538532799899667}
+  - component: {fileID: 8072538532799899668}
   m_Layer: 9
   m_Name: shop chest
   m_TagString: Untagged
@@ -9999,6 +10000,21 @@ MonoBehaviour:
   buttonParent: {fileID: 673323723}
   itemButtons: []
   playerInv: {fileID: 0}
+  shopPanel: {fileID: 1212438745}
+--- !u!136 &8072538532799899668
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072538532799899666}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.45
+  m_Height: 1.009787
+  m_Direction: 1
+  m_Center: {x: 0.0010899007, y: 0.5048935, z: 0.00000023841858}
 --- !u!4 &8074411581121148664
 Transform:
   m_ObjectHideFlags: 0
@@ -10147,7 +10163,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8072122559491818230}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.45
   m_Height: 1.009787
   m_Direction: 1

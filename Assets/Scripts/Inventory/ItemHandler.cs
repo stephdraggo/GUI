@@ -13,6 +13,13 @@ namespace GUI3.Inventories
         {
             
         }
+        private void Update()
+        {
+            if (transform.position.y < -200) //if fallen off world
+            {
+                Destroy(gameObject); //remove
+            }
+        }
         public void OnCollection(Inventory _inventory)
         {
             if (itemType == ItemType.Money)
@@ -26,34 +33,6 @@ namespace GUI3.Inventories
             else //Food,Crafting,Ingredients,Potions,Scrolls
             {
                 _inventory.AddItem(itemId);
-                /*
-                int found = 0;
-                int addIndex = 0;
-                for (int i = 0; i < inv.inventory.Count; i++)
-                {
-                    if (itemId == inv.inventory[i].ID)
-                    {
-                        found = 1;
-                        addIndex = i;
-                        break;
-                    }
-                }
-                if (found == 1)
-                {
-                    inv.inventory[addIndex].Amount += amount;
-                }
-                else
-                {
-                    inv.inventory.Add(ItemData.CreateItem(itemId));
-
-                    for (int i = 0; i < inv.inventory.Count; i++)
-                    {
-                        if (itemId == inv.inventory[i].ID)
-                        {
-                            inv.inventory[i].Amount = amount;
-                        }
-                    }
-                }*/
             }
             Destroy(gameObject);
         }

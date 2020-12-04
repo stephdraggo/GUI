@@ -8,6 +8,7 @@ namespace GUI3.Inventories
     public class Shop : InvBase
     {
         public Inventory playerInv;
+        public GameObject shopPanel;
 
         protected override void Start()
         {

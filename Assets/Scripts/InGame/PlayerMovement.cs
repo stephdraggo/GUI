@@ -148,9 +148,10 @@ namespace GUI1
                     }
                     #endregion
                     #region Shop or chest
-                    if (hitInfo.collider.TryGetComponent(out GUI3.Inventories.InvBase inv))
+                    if (hitInfo.collider.TryGetComponent(out GUI3.Inventories.Shop inv))
                     {
                         //set which shop/chest it is here
+                        inv.shopPanel.SetActive(true);
 
                         FindObjectOfType<PauseControl>().ShowInv();
                     }
