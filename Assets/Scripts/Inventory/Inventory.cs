@@ -6,35 +6,12 @@ using UnityEngine.UI;
 
 namespace GUI3.Inventories
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : InvBase
     {
         #region Variables
         [Header("Inventory Variables")]
-        #region general inventory info
-        public List<Item> inventory = new List<Item>();
-        public Item selectedItem;
-        public GameObject selectedButton;
-        [SerializeField] private PlayerControl player;
         public static int money;
-        #endregion
-
-        [Header("Shown Item Variables")]
-        #region item display
-        public GameObject itemShow;
-        public Text itemName;
-        public Image itemIcon;
-        public Text itemDescription;
-        public Button useButton;
-        public Text buttonText;
-        #endregion
-
-        [Header("Display Variables")]
-        public GameObject itemButtonPrefab;
-        public Transform buttonParent;
-        private string sortType = "";
-        private string[] sortByType;
-        private List<GameObject> itemButtons;
-
+        public Text displayMoney;
         public GameObject itemPrefab;
         public Transform itemParent;
 
@@ -49,82 +26,52 @@ namespace GUI3.Inventories
             public GameObject currentlyEquipped;
             public Item item;
         }
-
         #endregion
 
-        void Start()
+        protected override void Start()
         {
-            player = gameObject.GetComponent<PlayerControl>();
-
-            #region get array of sorting types
-            string[] first = new string[] { "All" };
-            string[] second = System.Enum.GetNames(typeof(ItemType));
-            string[] sortByType = first.Concat(second).ToArray();
-            #endregion
+            base.Start();
 
             #region add some default items
             //add some items in here (theoretically could have one of each item)
-            inventory.Add(ItemData.CreateItem(Random.Range(0, 2)));
-            inventory.Add(ItemData.CreateItem(Random.Range(0, 2)));
-            inventory.Add(ItemData.CreateItem(Random.Range(100, 103)));
-            inventory.Add(ItemData.CreateItem(Random.Range(100, 103)));
-            inventory.Add(ItemData.CreateItem(Random.Range(100, 103)));
-            inventory.Add(ItemData.CreateItem(Random.Range(200, 212)));
-            inventory.Add(ItemData.CreateItem(Random.Range(300, 302)));
-            inventory.Add(ItemData.CreateItem(Random.Range(300, 302)));
-            inventory.Add(ItemData.CreateItem(Random.Range(500, 502)));
-            inventory.Add(ItemData.CreateItem(Random.Range(500, 502)));
-            inventory.Add(ItemData.CreateItem(Random.Range(600, 602)));
-            inventory.Add(ItemData.CreateItem(Random.Range(600, 602)));
+            AddItem(Random.Range(0, 2));
+            AddItem(Random.Range(0, 2));
+            AddItem(Random.Range(100, 103));
+            AddItem(Random.Range(100, 103));
+            AddItem(Random.Range(100, 103));
+            AddItem(Random.Range(200, 212));
+            AddItem(Random.Range(300, 302));
+            AddItem(Random.Range(300, 302));
+            AddItem(Random.Range(500, 502));
+            AddItem(Random.Range(500, 502));
+            AddItem(Random.Range(600, 602));
+            AddItem(Random.Range(600, 602));
             #endregion
 
+            SortAndShowInventory();
         }
-
-        void Update()
+        protected override void Update()
         {
-            if (selectedItem != null)
-            {
-                ShowItem();
-            }
-            else
-            {
-                itemShow.SetActive(false);
-            }
+            base.Update();
+
+            displayMoney.text = "$" + money.ToString();
         }
         #region Functions
-        public Item FindItem(int _id)
-        {
-            return inventory.Find(items => items.ID == _id);
-        }
-        public void AddItem(Item item)
-        {
-            Item foundItem = inventory.Find(items => items.ID == item.ID);
-            if (foundItem != null)
-            {
-                foundItem.Amount += item.Amount;
-            }
-            else
-            {
-                inventory.Add(item);
-            }
-        }
-        public void ShowItem()
-        {
-            #region display item details
-            itemShow.SetActive(true);
-            itemName.text = selectedItem.Name;
-            itemIcon.sprite = selectedItem.Icon;
-            itemDescription.text = selectedItem.Description;
-            #endregion
 
-            #region set ui by type
 
-            useButton.onClick.RemoveAllListeners(); //add specific listeners in switch
+        public override void ShowItem()
+        {
+            base.ShowItem();
+
+            #region set use button by type
+
+            actionButtons[0].onClick.RemoveAllListeners(); //add specific listeners in switch
+            buttonText = actionButtons[0].GetComponentInChildren<Text>();
             switch (selectedItem.Type)
             {
                 case ItemType.Consumable:
                     buttonText.text = "Consume";
-                    useButton.onClick.AddListener(ConsumeItem);
+                    actionButtons[0].onClick.AddListener(ConsumeItem);
                     break;
 
                 case ItemType.Weapon:
@@ -136,32 +83,32 @@ namespace GUI3.Inventories
                     {
                         buttonText.text = "Unequip";
                     }
-                    useButton.onClick.AddListener(EquipItem);
+                    actionButtons[0].onClick.AddListener(EquipItem);
                     break;
 
                 case ItemType.Wearable:
                     buttonText.text = "Equip";
-                    useButton.onClick.AddListener(EquipItem);
+                    actionButtons[0].onClick.AddListener(EquipItem);
                     break;
 
                 case ItemType.Crafting:
                     buttonText.text = "Use";
-                    useButton.onClick.AddListener(UseItem);
+                    actionButtons[0].onClick.AddListener(UseItem);
                     break;
 
                 case ItemType.Ingredients:
                     buttonText.text = "Use";
-                    useButton.onClick.AddListener(UseItem);
+                    actionButtons[0].onClick.AddListener(UseItem);
                     break;
 
                 case ItemType.Potions:
                     buttonText.text = "Consume";
-                    useButton.onClick.AddListener(ConsumeItem);
+                    actionButtons[0].onClick.AddListener(ConsumeItem);
                     break;
 
                 case ItemType.Scrolls:
                     buttonText.text = "Use";
-                    useButton.onClick.AddListener(UseItem);
+                    actionButtons[0].onClick.AddListener(UseItem);
                     break;
 
                 case ItemType.Quest:
@@ -182,14 +129,14 @@ namespace GUI3.Inventories
         {
             //crafting, ingredients, scrolls
             Debug.Log("Used " + selectedItem.Name);
-            RidItem();
+            RemoveItem();
         }
         private void ConsumeItem()
         {
             //food, potions
             Debug.Log("Consumed " + selectedItem.Name);
             player.lifeForce[0].current += selectedItem.EffectAmount;
-            RidItem();
+            RemoveItem();
         }
         private void EquipItem()
         {
@@ -222,34 +169,11 @@ namespace GUI3.Inventories
             newIt.itemType = selectedItem.Type;
             newIt.amount = 1;
             newObject.name = selectedItem.Name;
-            RidItem();
-        }
-        private void RidItem()
-        {
-            inventory.Remove(selectedItem);
-            selectedItem = null;
-            Destroy(selectedButton);
+
+            RemoveItem();
         }
         #endregion
-        public void SortAndShowInventory()
-        {
-            // foreach (Item item in inventory)
-            for (int i = 0; i < inventory.Count; i++)
-            {
-                GameObject newButton = Instantiate(itemButtonPrefab, buttonParent);
-                newButton.GetComponentInChildren<Text>().text = inventory[i].Name + ": " + inventory[i].Amount.ToString();
-
-                Item _item = inventory[i];
-                newButton.GetComponent<Button>().onClick.AddListener(() => SelectItem(_item, newButton));
-
-                newButton.name = inventory[i].Name;
-            }
-        }
-        private void SelectItem(Item item, GameObject button)
-        {
-            selectedItem = item;
-            selectedButton = button;
-        }
+        
         #endregion
 
     }

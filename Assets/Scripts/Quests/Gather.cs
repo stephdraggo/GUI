@@ -25,8 +25,9 @@ namespace GameSystems.Quests
         }
         #endregion
         #region Functions
+        
         public override bool Completed()
-        {
+        {/*
             GUI3.Inventories.Item item = inventory.FindItem(itemId);
             if (item == null)
             {
@@ -35,9 +36,10 @@ namespace GameSystems.Quests
             if (item.Amount >= requiredAmount)
             {
                 return true;
-            }
+            }*/
             return false;
         }
+        
         #endregion
     }
 }

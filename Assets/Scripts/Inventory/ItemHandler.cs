@@ -21,11 +21,11 @@ namespace GUI3.Inventories
             }
             else if (itemType == ItemType.Weapon || itemType == ItemType.Wearable || itemType == ItemType.Quest)//Weapon,Apparel, Quest
             {
-                _inventory.AddItem(ItemData.CreateItem(itemId));
+                _inventory.AddItem(itemId);
             }
             else //Food,Crafting,Ingredients,Potions,Scrolls
             {
-                _inventory.AddItem(ItemData.CreateItem(itemId));
+                _inventory.AddItem(itemId);
                 /*
                 int found = 0;
                 int addIndex = 0;
