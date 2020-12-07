@@ -10,6 +10,7 @@ namespace GUI1
     {
         [Header("Physics")]
         public CharacterController controller;
+        public GUI3.Inventories.Inventory inventory;
         public float gravity = 20f;
         [Header("Movement Variables")]
         public float speed = 5f, jumpSpeed = 8f;
@@ -29,6 +30,7 @@ namespace GUI1
         void Start()
         {
             controller = gameObject.GetComponent<CharacterController>(); //link the attacher character controller
+            inventory= gameObject.GetComponent<GUI3.Inventories.Inventory>();
         }
 
 
@@ -150,8 +152,11 @@ namespace GUI1
                     #region Shop or chest
                     if (hitInfo.collider.TryGetComponent(out GUI3.Inventories.Shop inv))
                     {
+                        inv.enabled = true;
                         //set which shop/chest it is here
-                        inv.shopPanel.SetActive(true);
+                        inventory.chestShopActive = true;
+                        inventory.chestShopPanel.SetActive(true);
+                        
 
                         FindObjectOfType<PauseControl>().ShowInv();
                     }

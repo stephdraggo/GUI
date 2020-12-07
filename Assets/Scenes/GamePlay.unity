@@ -4117,7 +4117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &725963588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8077,6 +8077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
+  inventory: {fileID: 0}
   gravity: 20
   speed: 5
   jumpSpeed: 8
@@ -8146,6 +8147,8 @@ MonoBehaviour:
   - slotName: hand
     equipLocation: {fileID: 1797754864}
     currentlyEquipped: {fileID: 1732418338}
+  chestShopActive: 0
+  chestShopPanel: {fileID: 1212438745}
 --- !u!1 &1749429849
 GameObject:
   m_ObjectHideFlags: 0
@@ -10000,7 +10003,6 @@ MonoBehaviour:
   buttonParent: {fileID: 673323723}
   itemButtons: []
   playerInv: {fileID: 0}
-  shopPanel: {fileID: 1212438745}
 --- !u!136 &8072538532799899668
 CapsuleCollider:
   m_ObjectHideFlags: 0

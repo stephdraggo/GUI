@@ -88,15 +88,6 @@ namespace GUI1
         public void SaveCharacter()
         {
             player.Save();
-            /*
-            PlayerPrefs.SetString("CharacterName", player.name);
-
-            for (int i = 0; i < player.skills.Length; i++)
-            {
-                PlayerPrefs.SetInt(player.skills[i].skillName, (player.skills[i].baseValue + player.skills[i].tempValue));
-            }
-            PlayerPrefs.SetString("CharacterClass", selectedClass[selectedIndex]);
-            */
         }
         #endregion
         #region choose class

@@ -18,6 +18,10 @@ namespace GUI3.Inventories
         [Header("Equipment")]
         public Equipment[] equipmentSlots;
 
+        [Header("Current Shop/Chest")]
+        public bool chestShopActive;
+        public GameObject chestShopPanel;
+
         [System.Serializable]
         public struct Equipment
         {
@@ -49,6 +53,9 @@ namespace GUI3.Inventories
             #endregion
 
             SortAndShowInventory();
+
+            chestShopPanel.SetActive(false);
+
         }
         protected override void Update()
         {
