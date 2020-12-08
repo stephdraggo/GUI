@@ -130,7 +130,7 @@ namespace GUI1
             {
                 if (lifeForce[i].current <= 1) //if no stat value
                 {
-                    lifeForce[i].current += 10; //add 10
+                    lifeForce[i].current =Random.Range(10, lifeForce[i].max); //give value
                 }
             }
         }
