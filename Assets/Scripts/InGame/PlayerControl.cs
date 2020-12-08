@@ -98,6 +98,7 @@ namespace GUI1
                 if (_move)
                 {
                     Vector3 movePlace = transform.position - spawn.position;
+
                     transform.Translate(movePlace);
                 }
                 #endregion
