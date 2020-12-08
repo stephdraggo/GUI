@@ -25,6 +25,10 @@ namespace GUI1
 
         void Update()
         {
+            if (PlayerControl.isDead)
+            {
+                Pause();
+            }
             if (GameSystems.NPCs.BaseNPC.showDialogue)
             {
                 dialoguePanel.SetActive(true);

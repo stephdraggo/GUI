@@ -12,7 +12,7 @@ namespace GUI1
         public static bool isDead;
         public int level;
         public CharacterClass playerClass;
-        public GameObject damageScreen;
+        public GameObject damageScreen,deathScreen;
         public Transform spawn;
 
         [System.Serializable]
@@ -63,6 +63,9 @@ namespace GUI1
 
             CheckStats();
 
+            isDead = false;
+            damageScreen.SetActive(false);
+            deathScreen.SetActive(false);
             
         }
         #endregion
@@ -153,37 +156,30 @@ namespace GUI1
         }
         #endregion
         #region damage
-        /// <summary>
-        /// Problem: the damage screen never gets set to active for some reason??
-        /// Otherwise this method runs fine.
-        /// If I manually enable the damage screen, this method deactivates it correctly.
-        /// </summary>
-        /// <param name="_damage"></param>
-        public void Damaged(float _damage)
+        public IEnumerator Damaged(float _damage)
         {
             lifeForce[0].current -= _damage;
             damageScreen.SetActive(true);
-            float i = 1;
-            do
-            {
-                damageScreen.SetActive(true);
-                i -= Time.deltaTime;
-                if (i < -1)
-                {
-                    break;
-                }
-            } while (i>0);
+            yield return new WaitForSeconds(1);
             damageScreen.SetActive(false);
         }
         #endregion
-        #region die
+        #region die and respawn
         public void Die()
         {
-            Load(true); //reload character at last save
+            deathScreen.SetActive(true);
+            damageScreen.SetActive(false);
+            isDead = true;
             for (int i = 0; i < lifeForce.Length; i++)
             {
                 lifeForce[i].current = lifeForce[i].max; //reset stats
             }
+        }
+        public void Respawn()
+        {
+            deathScreen.SetActive(false);
+            damageScreen.SetActive(false);
+            isDead = false;
         }
         #endregion
         #endregion

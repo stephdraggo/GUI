@@ -15,7 +15,7 @@ public class Testing : MonoBehaviour
         #region damage player with X
         if (Input.GetKeyDown(KeyCode.X))
         {
-            player.Damaged(10);
+            StartCoroutine(player.Damaged(10));
         }
         #endregion
     }
