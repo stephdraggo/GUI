@@ -180,12 +180,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b8e8ec54b65c2241a9b5f4351ff0a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: Kevin
+  npcName: Flavour Kevin
   dialogueText:
   - hi
   - im kevin
   - this is middle text
   - nearly there
+  - bye
+  neutral:
+  - hi
+  - im kevin
+  - have we met?
+  - nice to meet you
+  - bye
+  positive:
+  - hi friend
+  - I remember you
+  - you're pretty rad
+  - I like you
+  - okay bye
+  negative:
+  - oh
+  - what?
+  - yeah not interested
+  - sorry
   - bye
   nameText: {fileID: 1268110801}
   dialogueDisplay: {fileID: 1360341080}
@@ -1473,7 +1491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &216103187
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3060,6 +3078,7 @@ Transform:
   m_Children:
   - {fileID: 8074411581121148664}
   - {fileID: 55233371}
+  - {fileID: 1745931146}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3491,7 +3510,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 490974964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1738190138}
+        m_MethodName: Respawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &490974964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8629,6 +8659,146 @@ MonoBehaviour:
     currentlyEquipped: {fileID: 1732418338}
   chestShopActive: 0
   chestShopPanel: {fileID: 1212438745}
+--- !u!114 &1738190143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738190137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bf02a11ada0424285eb1cc1054626a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  inventory: {fileID: 0}
+--- !u!1 &1745931145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1745931146}
+  - component: {fileID: 1745931150}
+  - component: {fileID: 1745931149}
+  - component: {fileID: 1745931148}
+  - component: {fileID: 1745931147}
+  m_Layer: 0
+  m_Name: KevinQuest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1745931146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745931145}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.73, y: 43.14, z: 32.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 459712349}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1745931147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745931145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e04d0f382c99f347a5d5fb5a7f7b25a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcName: Quest Kevin
+  dialogueText: []
+  neutral: []
+  positive: []
+  negative: []
+  nameText: {fileID: 0}
+  dialogueDisplay: {fileID: 0}
+  dialogueActions: []
+  questManager: {fileID: 1738190143}
+  quest:
+    title: My Apples!
+    description: Quest Kevin lost his cursed apples, please find them and return
+      them to him.
+    questGiver: {fileID: 1745931147}
+    goal: {fileID: 0}
+    type: 0
+    experienceGain: 5
+    goldGain: 5
+    requiredLevel: 0
+--- !u!136 &1745931148
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745931145}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!23 &1745931149
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745931145}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1745931150
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745931145}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1749429849
 GameObject:
   m_ObjectHideFlags: 0

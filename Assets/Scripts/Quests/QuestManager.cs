@@ -18,7 +18,8 @@ namespace GameSystems.Quests
         #endregion
         void Start()
         {
-
+            player = FindObjectOfType<GUI1.PlayerControl>();
+            inventory = player.gameObject.GetComponent<GUI3.Inventories.Inventory>();
         }
 
         void Update()

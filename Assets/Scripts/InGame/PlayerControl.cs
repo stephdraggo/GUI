@@ -63,9 +63,12 @@ namespace GUI1
 
             CheckStats();
 
-            isDead = false;
-            damageScreen.SetActive(false);
-            deathScreen.SetActive(false);
+            if (damageScreen != null) //not for customisation scene
+            {
+                isDead = false;
+                damageScreen.SetActive(false);
+                deathScreen.SetActive(false);
+            }
             
         }
         #endregion

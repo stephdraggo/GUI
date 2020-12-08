@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameSystems.NPCs
 {
-    public class QuestNPC : BaseNPC
+    public class QuestNPC : FlavourNPC
     {
         #region Variables
         [SerializeField] protected Quests.QuestManager questManager;
@@ -23,6 +23,11 @@ namespace GameSystems.NPCs
         #region Functions
         public override void Interact()
         {
+            nameText.text = npcName; //display name
+            showDialogue = true; //
+            dialogueDisplay.text = dialogueText[dialogueIndex];
+
+
             Debug.Log("Quest giver NPC.");
             switch (quest.goal.state)
             {
