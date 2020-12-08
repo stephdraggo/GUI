@@ -124,6 +124,15 @@ namespace GUI1
             lifeForce[1].max = skills[1].totalValue * 3 + skills[2].totalValue;
             //mana is one part aura, one part thought
             lifeForce[2].max = skills[4].totalValue + skills[5].totalValue;
+
+            //check that stats have values greater than 0
+            for (int i = 0; i < lifeForce.Length; i++)
+            {
+                if (lifeForce[i].current <= 1) //if no stat value
+                {
+                    lifeForce[i].current += 10; //add 10
+                }
+            }
         }
         #endregion
         #endregion
