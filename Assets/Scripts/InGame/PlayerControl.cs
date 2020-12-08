@@ -12,6 +12,8 @@ namespace GUI1
         public static bool isDead;
         public int level;
         public CharacterClass playerClass;
+        public GameObject damageScreen;
+        public Transform spawn;
 
         [System.Serializable]
         public struct StatBlock //for health, mana, stamina
@@ -64,13 +66,22 @@ namespace GUI1
             
         }
         #endregion
+        #region Update
+        private void Update()
+        {
+            if (lifeForce[0].current <= 0)
+            {
+                Die();
+            }
+        }
+        #endregion
         #region Functions
         #region save and load
         public void Save()
         {
             BinarySaveControl.SavePlayer(this);
         }
-        public void Load()
+        public void Load(bool _move=false)
         {
             PlayerData data = BinarySaveControl.LoadPlayer();
 
@@ -84,6 +95,11 @@ namespace GUI1
 
                 #region position
                 transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+                if (_move)
+                {
+                    Vector3 movePlace = transform.position - spawn.position;
+                    transform.Translate(movePlace);
+                }
                 #endregion
 
                 #region Life Force
@@ -132,6 +148,40 @@ namespace GUI1
                 {
                     lifeForce[i].current =Random.Range(10, lifeForce[i].max); //give value
                 }
+            }
+        }
+        #endregion
+        #region damage
+        /// <summary>
+        /// Problem: the damage screen never gets set to active for some reason??
+        /// Otherwise this method runs fine.
+        /// If I manually enable the damage screen, this method deactivates it correctly.
+        /// </summary>
+        /// <param name="_damage"></param>
+        public void Damaged(float _damage)
+        {
+            lifeForce[0].current -= _damage;
+            damageScreen.SetActive(true);
+            float i = 1;
+            do
+            {
+                damageScreen.SetActive(true);
+                i -= Time.deltaTime;
+                if (i < -1)
+                {
+                    break;
+                }
+            } while (i>0);
+            damageScreen.SetActive(false);
+        }
+        #endregion
+        #region die
+        public void Die()
+        {
+            Load(true); //reload character at last save
+            for (int i = 0; i < lifeForce.Length; i++)
+            {
+                lifeForce[i].current = lifeForce[i].max; //reset stats
             }
         }
         #endregion
