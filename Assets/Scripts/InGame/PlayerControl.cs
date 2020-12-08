@@ -74,32 +74,39 @@ namespace GUI1
         {
             PlayerData data = BinarySaveControl.LoadPlayer();
 
-            name = data.name;
-
-            level = data.level;
-
-            playerClass = data.playerClass;
-
-            #region position
-            transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
-            #endregion
-
-            #region Life Force
-            for (int i = 0; i < 3; i++)
+            if (data != null)
             {
-                lifeForce[i].current = data.currentLifeForce[i];
-                lifeForce[i].max = data.maxLifeForce[i];
-            }
-            #endregion
+                name = data.name;
 
-            #region Skills
-            for (int i = 0; i < 6; i++)
-            {
-                skills[i].baseValue = data.skillBase[i];
-                skills[i].tempValue = data.skillTemp[i];
-                skills[i].totalValue = skills[i].baseValue + skills[i].tempValue;
+                level = data.level;
+
+                playerClass = data.playerClass;
+
+                #region position
+                transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+                #endregion
+
+                #region Life Force
+                for (int i = 0; i < 3; i++)
+                {
+                    lifeForce[i].current = data.currentLifeForce[i];
+                    lifeForce[i].max = data.maxLifeForce[i];
+                }
+                #endregion
+
+                #region Skills
+                for (int i = 0; i < 6; i++)
+                {
+                    skills[i].baseValue = data.skillBase[i];
+                    skills[i].tempValue = data.skillTemp[i];
+                    skills[i].totalValue = skills[i].baseValue + skills[i].tempValue;
+                }
+                #endregion
             }
-            #endregion
+            else
+            {
+                Debug.Log("If this message shows up more than once there may be a problem with the save file.");
+            }
         }
         #endregion
         #region stats
