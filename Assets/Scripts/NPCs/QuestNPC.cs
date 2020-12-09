@@ -23,10 +23,14 @@ namespace GameSystems.NPCs
         #region Functions
         public override void Interact()
         {
-            nameText.text = npcName; //display name
+            nameText.text = npcName+": "+quest.title; //display name
             showDialogue = true; //
-            dialogueDisplay.text = dialogueText[dialogueIndex];
+            dialogueDisplay.text = quest.description;
 
+            #region set buttons
+            dialogueActions[0].gameObject.SetActive(false); //next
+
+            #endregion
 
             Debug.Log("Quest giver NPC.");
             switch (quest.goal.state)

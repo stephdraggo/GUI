@@ -4518,7 +4518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &725963588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4684,7 +4684,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813903514}
-  m_LocalRotation: {x: 0.058373943, y: 0.34207094, z: -0.021296564, w: 0.9376174}
+  m_LocalRotation: {x: 0.058373954, y: 0.34207094, z: -0.02129657, w: 0.9376174}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8686,7 +8686,7 @@ GameObject:
   - component: {fileID: 1745931149}
   - component: {fileID: 1745931148}
   - component: {fileID: 1745931147}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: KevinQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8724,9 +8724,13 @@ MonoBehaviour:
   neutral: []
   positive: []
   negative: []
-  nameText: {fileID: 0}
-  dialogueDisplay: {fileID: 0}
-  dialogueActions: []
+  nameText: {fileID: 1268110801}
+  dialogueDisplay: {fileID: 1360341080}
+  dialogueActions:
+  - {fileID: 1755494131}
+  - {fileID: 814962670}
+  - {fileID: 914849373}
+  - {fileID: 400304052}
   questManager: {fileID: 1738190143}
   quest:
     title: My Apples!

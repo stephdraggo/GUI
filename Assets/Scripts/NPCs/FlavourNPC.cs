@@ -36,6 +36,11 @@ namespace GameSystems.NPCs
             showDialogue = true; //
             dialogueDisplay.text = dialogueText[dialogueIndex];
 
+            for (int i = 0; i < dialogueActions.Length; i++)
+            {
+                dialogueActions[i].gameObject.SetActive(true);
+            }
+
             dialogueActions[2].GetComponentInChildren<Text>().text = "Be nice to Kevin.";
             dialogueActions[2].onClick.RemoveAllListeners();
             dialogueActions[2].onClick.AddListener(Nice);
