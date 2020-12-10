@@ -24,7 +24,7 @@ namespace GameSystems.NPCs
         public override void Interact()
         {
             nameText.text = npcName+": "+quest.title; //display name
-            showDialogue = true; //
+            showQuest = true; //
             dialogueDisplay.text = quest.description;
 
             #region set buttons

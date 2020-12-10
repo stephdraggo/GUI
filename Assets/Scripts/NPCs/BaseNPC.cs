@@ -9,7 +9,7 @@ namespace GameSystems.NPCs
         #region Variables
         [SerializeField]
         protected string npcName;
-        public static bool showDialogue;
+        public static bool showDialogue,showQuest;
         #endregion
 
         #region Functions
