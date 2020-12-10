@@ -13,7 +13,7 @@ namespace GUI3.Inventories
 
         [Header("Inventory Variables")]
         #region general inventory info
-        public List<Item> inventory = new List<Item>();
+        public List<Item> inv = new List<Item>();
         public Item selectedItem;
         public GameObject selectedButton;
         public PlayerControl player;
@@ -73,7 +73,7 @@ namespace GUI3.Inventories
         #region Functions
         public virtual void AddItem(int _id, int _amount = 1)
         {
-            Item _item = (inventory.Find(items => items.ID == _id));
+            Item _item = (inv.Find(items => items.ID == _id));
 
             if (_item != null)
             {
@@ -81,7 +81,7 @@ namespace GUI3.Inventories
             }
             else
             {
-                inventory.Add(ItemData.CreateItem(_id));
+                inv.Add(ItemData.CreateItem(_id));
             }
             SortAndShowInventory();
         }
@@ -97,7 +97,7 @@ namespace GUI3.Inventories
             }
             else
             {
-                inventory.Remove(selectedItem);
+                inv.Remove(selectedItem);
                 selectedItem = null;
                 Destroy(selectedButton);
             }
@@ -121,13 +121,13 @@ namespace GUI3.Inventories
                 itemButtons.Clear();
             }
 
-            for (int i = 0; i < inventory.Count; i++)
+            for (int i = 0; i < inv.Count; i++)
             {
                 GameObject newButton = Instantiate(itemButtonPrefab, buttonParent);
-                newButton.GetComponentInChildren<Text>().text = inventory[i].Name + ": " + inventory[i].Amount.ToString();
-                Item _item = inventory[i];
+                newButton.GetComponentInChildren<Text>().text = inv[i].Name + ": " + inv[i].Amount.ToString();
+                Item _item = inv[i];
                 newButton.GetComponent<Button>().onClick.AddListener(() => SelectItem(_item, newButton));
-                newButton.name = inventory[i].Name;
+                newButton.name = inv[i].Name;
 
                 itemButtons.Add(newButton);
             }

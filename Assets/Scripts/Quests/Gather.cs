@@ -17,7 +17,7 @@ namespace GameSystems.Quests
         #region Start
         private void Start()
         {
-            inventory = GameObject.FindObjectOfType<GUI3.Inventories.Inventory>(); //this might be wrong
+            inventory = FindObjectOfType<GUI1.PlayerControl>().GetComponent<GUI3.Inventories.Inventory>(); //get inventory of player
             if (inventory == null)
             {
                 Debug.LogError("There is no player inventory.");
@@ -27,8 +27,11 @@ namespace GameSystems.Quests
         #region Functions
         
         public override bool Completed()
-        {/*
-            GUI3.Inventories.Item item = inventory.FindItem(itemId);
+        {
+            //figure out if player inv contains item of id itemID
+
+            GUI3.Inventories.Item item = inventory.IDToItem(itemId);
+
             if (item == null)
             {
                 return false;
@@ -36,7 +39,7 @@ namespace GameSystems.Quests
             if (item.Amount >= requiredAmount)
             {
                 return true;
-            }*/
+            }
             return false;
         }
         

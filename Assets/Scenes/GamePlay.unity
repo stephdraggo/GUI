@@ -4876,7 +4876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &725963588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9350,6 +9350,7 @@ GameObject:
   - component: {fileID: 1745931149}
   - component: {fileID: 1745931148}
   - component: {fileID: 1745931147}
+  - component: {fileID: 1745931151}
   m_Layer: 9
   m_Name: KevinQuest
   m_TagString: Untagged
@@ -9399,7 +9400,7 @@ MonoBehaviour:
     description: Quest Kevin lost his cursed apples, please find them and return
       them to him.
     questGiver: {fileID: 1745931147}
-    goal: {fileID: 0}
+    goal: {fileID: 1745931151}
     type: 0
     experienceGain: 5
     goldGain: 5
@@ -9465,6 +9466,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745931145}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1745931151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745931145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899518a7bbcf2b14aa669be296f5e9b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  state: 0
+  itemId: 0
+  requiredAmount: 5
+  currentAmount: 0
+  inventory: {fileID: 0}
 --- !u!1 &1749429849
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,7 +28,12 @@ namespace GameSystems.NPCs
             dialogueDisplay.text = quest.description;
 
             #region set buttons
-            dialogueActions[0].gameObject.SetActive(false); //next
+            for (int i = 0; i < dialogueActions.Length; i++)
+            {
+                dialogueActions[i].onClick.RemoveAllListeners();
+            }
+            dialogueActions[0].onClick.AddListener(()=>questManager.AcceptQuest(quest));
+            dialogueActions[1].onClick.AddListener(()=>questManager.DeclineQuest(quest));
 
             #endregion
 
@@ -38,7 +43,7 @@ namespace GameSystems.NPCs
                 case Quests.QuestState.Available:
                     //dialogue: "do this thing please"
                     //for now accepts quests by default
-                    questManager.AcceptQuest(quest);
+                    //questManager.AcceptQuest(quest);
                     break;
 
                 case Quests.QuestState.Active:

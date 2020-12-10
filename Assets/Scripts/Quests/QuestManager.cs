@@ -12,6 +12,7 @@ namespace GameSystems.Quests
         //also reference dialogue script
         private Quest currentQuest;
 
+
         #endregion
         #region Properties
         
@@ -32,10 +33,12 @@ namespace GameSystems.Quests
         {
             currentQuest = _quest;
             currentQuest.goal.state = QuestState.Active;
+            NPCs.BaseNPC.showQuest = false;
         }
         public void DeclineQuest(Quest _quest)
         {
             _quest.goal.state = QuestState.Available;
+            NPCs.BaseNPC.showQuest = false;
         }
         public void ClaimReward()
         {

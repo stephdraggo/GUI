@@ -181,7 +181,24 @@ namespace GUI3.Inventories
             RemoveItem();
         }
         #endregion
-        
+        /// <summary>
+        /// this might
+        /// </summary>
+        /// <param name="_id"></param>
+        /// <returns></returns>
+        public Item IDToItem(int _id)
+        {
+            
+            for (int i = 0; i < inv.Count; i++)
+            {
+                if (inv[i].ID == _id)
+                {
+                    return inv[i];
+                }
+            }
+
+            return null;
+        }
         #endregion
 
     }

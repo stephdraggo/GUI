@@ -42,11 +42,14 @@ namespace GUI1
             }
             if (GameSystems.NPCs.BaseNPC.showQuest)
             {
-                Pause();
-                questPanel.SetActive(true);
-                pausePanel.SetActive(false);
+                if (!questPanel.activeSelf)
+                {
+                    Pause();
+                    questPanel.SetActive(true);
+                    pausePanel.SetActive(false);
+                }
             }
-            else if(dialoguePanel.activeSelf)
+            else if (questPanel.activeSelf)
             {
                 Resume();
                 questPanel.SetActive(false);
