@@ -16,6 +16,8 @@ namespace GameSystems.Quests
 
         #region Abstract Functions
         public abstract bool Completed();
+
+        public abstract void Claim();
         #endregion
     }
 

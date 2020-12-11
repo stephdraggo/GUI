@@ -36,13 +36,19 @@ namespace GameSystems.Quests
             {
                 return false;
             }
+            currentAmount = item.Amount;
             if (item.Amount >= requiredAmount)
             {
                 return true;
             }
             return false;
         }
-        
+        public override void Claim()
+        {
+            inventory.selectedItem = inventory.IDToItem(itemId);
+            inventory.RemoveItem(requiredAmount);
+            inventory.selectedItem = null;
+        }
         #endregion
     }
 }

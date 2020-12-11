@@ -28,44 +28,63 @@ namespace GameSystems.NPCs
             dialogueDisplay.text = quest.description;
 
             #region set buttons
+            //clear and enable all buttons
             for (int i = 0; i < dialogueActions.Length; i++)
             {
                 dialogueActions[i].onClick.RemoveAllListeners();
+                dialogueActions[i].enabled = true;
             }
-            dialogueActions[0].onClick.AddListener(()=>questManager.AcceptQuest(quest));
-            dialogueActions[1].onClick.AddListener(()=>questManager.DeclineQuest(quest));
-
+            //accept logic
+            if (quest.goal.state == Quests.QuestState.Available) //only if available
+            {
+                dialogueActions[0].onClick.AddListener(() => questManager.AcceptQuest(quest)); //add function
+            }
+            else
+            {
+                dialogueActions[0].enabled = false; //or disable button
+            }
+            //decline
+            dialogueActions[1].onClick.AddListener(()=>questManager.DeclineQuest(quest)); //decline button
+            //claim logic
+            if (quest.goal.Completed()) //only if completed
+            {
+                dialogueActions[2].onClick.AddListener(() => questManager.ClaimReward(quest)); //add function
+            }
+            else
+            {
+                dialogueActions[2].enabled = false; //or disable button
+            }
             #endregion
 
-            Debug.Log("Quest giver NPC.");
-            switch (quest.goal.state)
-            {
-                case Quests.QuestState.Available:
-                    //dialogue: "do this thing please"
-                    //for now accepts quests by default
-                    //questManager.AcceptQuest(quest);
-                    break;
+            //Debug.Log("Quest giver NPC.");
+            //switch (quest.goal.state)
+            //{
+            //    case Quests.QuestState.Available:
+            //        //dialogue: "do this thing please"
+            //        //for now accepts quests by default
+            //        //questManager.AcceptQuest(quest);
+            //        break;
 
-                case Quests.QuestState.Active:
-                    if (quest.goal.Completed())
-                    {
-                        //dialogue: "here's your reward"
-                        questManager.ClaimReward();
-                    }
-                    else
-                    {
-                        //dialogue: "what are you waiting for"
-                    }
-                    break;
+            //    case Quests.QuestState.Active:
+            //        if (quest.goal.Completed())
+            //        {
+            //            //dialogue: "here's your reward"
+            //            questManager.ClaimReward(quest);
+            //        }
+            //        else
+            //        {
+            //            //dialogue: "what are you waiting for"
+            //        }
+            //        break;
 
-                case Quests.QuestState.Claimed:
-                    //dialogue: "thanks for doing that thing earlier"
+            //    case Quests.QuestState.Claimed:
+            //        //dialogue: "thanks for doing that thing earlier"
 
-                    break;
+            //        break;
 
-                default:
-                    break;
-            }
+            //    default:
+            //        break;
+            //}
         }
         #endregion
     }

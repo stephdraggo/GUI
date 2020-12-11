@@ -10,5 +10,9 @@ namespace GameSystems.Quests
         {
             return true;
         }
+        public override void Claim()
+        {
+            
+        }
     }
 }
